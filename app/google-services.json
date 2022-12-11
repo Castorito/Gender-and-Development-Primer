@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "589760661549",
+    "project_id": "gender-and-development-p-9d382",
+    "storage_bucket": "gender-and-development-p-9d382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589760661549:android:3fe7a65fbd69f2417610a4",
+        "android_client_info": {
+          "package_name": "com.genderanddevelopmentprimer.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589760661549-f3d152qslks07q6fv40h27435iqvlat9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXTZd3MTT-tuCRpfV6hABL7Vh9CVTMTyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589760661549-f3d152qslks07q6fv40h27435iqvlat9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

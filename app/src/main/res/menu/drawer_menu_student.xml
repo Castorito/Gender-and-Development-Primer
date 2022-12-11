@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/student_common_fragment_1"
+            android:icon="@drawable/ic_content"
+            android:title="@string/brief_history_of_gender_and_development_in_the_philippines" />
+        <item
+            android:id="@+id/student_common_fragment_2"
+            android:icon="@drawable/ic_content"
+            android:title="@string/history_of_gender_and_development_resource_center" />
+        <item
+            android:id="@+id/student_common_fragment_3"
+            android:icon="@drawable/ic_content"
+            android:title="@string/history_of_gender_and_development_in_cvsu_ccc" />
+        <item
+            android:id="@+id/student_fragment_1"
+            android:icon="@drawable/ic_content"
+            android:title="@string/gender_sensitivity_training_module" />
+        <item
+            android:id="@+id/student_fragment_2"
+            android:icon="@drawable/ic_content"
+            android:title="@string/various_forms_of_violence" />
+        <item
+            android:id="@+id/student_fragment_3"
+            android:icon="@drawable/ic_content"
+            android:title="@string/legal_mandates_of_gad" />
+    </group>
+    <item android:title="@string/others">
+        <menu>
+            <item
+                android:id="@+id/localhelpdesk"
+                android:icon="@drawable/ic_helpdesk"
+                android:title="@string/local_help_desk_information" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_about_us"
+                android:title="@string/about_us" />
+        </menu>
+    </item>
+    <item android:title="" />
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/log_out" />
+
+</menu>
