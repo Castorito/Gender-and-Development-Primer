@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app;
+package com.genderanddevelopmentprimer.app.navbaractivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.genderanddevelopmentprimer.app.R;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag1;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag2;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag3;
@@ -42,6 +43,7 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
         teacher_drawer.addDrawerListener(teacher_toggle);
         teacher_toggle.syncState();
 
+        //saved the instance whe rotated
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new CommonFrag1()).commit();
             navigationView.setCheckedItem(R.id.teacher_common_fragment_1);

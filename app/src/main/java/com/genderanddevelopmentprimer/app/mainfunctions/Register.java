@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app;
+package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.genderanddevelopmentprimer.app.R;
+import com.genderanddevelopmentprimer.app.navbaractivity.StudentActivity;
+import com.genderanddevelopmentprimer.app.navbaractivity.TeacherActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -61,12 +64,14 @@ public class Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         mainLayout = findViewById(R.id.register_form);
-        btnregister.setOnClickListener(v -> {
 
-            isOnline();
+        //regiter button
+        btnregister.setOnClickListener(v -> {
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+
+            isOnline();
 
             String varFName = firstName.getText().toString().trim();
             String varLName = lastName.getText().toString().trim();

@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app;
+package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.genderanddevelopmentprimer.app.R;
+import com.genderanddevelopmentprimer.app.navbaractivity.StudentActivity;
+import com.genderanddevelopmentprimer.app.navbaractivity.TeacherActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +35,7 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
     TextView btnsignUp, btnForgotPass;
     RelativeLayout loading;
+    LinearLayout mainLayout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
@@ -53,7 +57,7 @@ public class Login extends AppCompatActivity {
 
         loading = findViewById(R.id.loading_layout);
 
-        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
+        mainLayout = findViewById(R.id.login_form);
 
         if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), StudentActivity.class));
@@ -62,6 +66,10 @@ public class Login extends AppCompatActivity {
 
         //Login Button
         btnLogin.setOnClickListener(v -> {
+
+            //hide keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
 
             isOnline();
 
@@ -87,25 +95,22 @@ public class Login extends AppCompatActivity {
                 return;
             }
 
-            LinearLayout mainLayout = findViewById(R.id.login_form);
-            //hide keyboard
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
-
             loading.setVisibility(View.VISIBLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
             fAuth.signInWithEmailAndPassword(varEmail, varPass).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+
                     //get userType/retrieve data
+                    userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
                     DocumentReference documentReference = fStore.collection("users").document(userID);
                     documentReference.addSnapshotListener((value, error) -> {
                         assert value != null;
                         if (Objects.equals(value.getString("userType"), "Teacher")) {
-                                startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
-                            } else if (Objects.equals(value.getString("userType"), "Student")) {
-                                startActivity(new Intent(getApplicationContext(), StudentActivity.class));
-                            }
+                            startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
+                        } else if (Objects.equals(value.getString("userType"), "Student")) {
+                            startActivity(new Intent(getApplicationContext(), StudentActivity.class));
+                        }
                     });
                     Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
                     finish();
@@ -142,11 +147,7 @@ public class Login extends AppCompatActivity {
             passwordResetDialog.setPositiveButton("Yes", (dialog, which) -> {
                 //reset link
                 String email = resetEmail.getText().toString().trim();
-                fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused ->
-                        Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show()
-                ).addOnFailureListener(e ->
-                        Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show()
-                );
+                fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
             });
             passwordResetDialog.setNegativeButton("No", (dialog, which) -> {
                 //close dialog

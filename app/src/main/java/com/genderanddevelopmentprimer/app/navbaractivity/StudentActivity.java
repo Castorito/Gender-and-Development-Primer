@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app;
+package com.genderanddevelopmentprimer.app.navbaractivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.genderanddevelopmentprimer.app.R;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag1;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag2;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag3;
@@ -40,6 +41,7 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
         student_drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //saved the instance while rotated
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag1()).commit();
             navigationView.setCheckedItem(R.id.student_common_fragment_1);
@@ -57,18 +59,6 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag3()).commit();
         }
         student_drawer.closeDrawer(GravityCompat.START);
-
-        /*switch (item.getItemId()) {
-            case R.id.student_common_fragment_1:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag1()).commit();
-                break;
-            case R.id.student_common_fragment_2:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag2()).commit();
-                break;
-            case R.id.student_common_fragment_3:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag3()).commit();
-                break;
-        }*/
 
         return true;
     }
