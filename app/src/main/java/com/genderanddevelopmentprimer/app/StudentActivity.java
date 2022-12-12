@@ -10,6 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag1;
+import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag2;
+import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag3;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -36,19 +39,46 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, student_drawer, student_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         student_drawer.addDrawerListener(toggle);
         toggle.syncState();
-    }
 
-    @Override
-    public void onBackPressed() {
-        if(student_drawer.isDrawerOpen(GravityCompat.START)){
-            student_drawer.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag1()).commit();
+            navigationView.setCheckedItem(R.id.student_common_fragment_1);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+        if (item.getItemId() == R.id.student_common_fragment_1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag1()).commit();
+        } else if (item.getItemId() == R.id.student_common_fragment_2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag2()).commit();
+        } else if (item.getItemId() == R.id.student_common_fragment_3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag3()).commit();
+        }
+        student_drawer.closeDrawer(GravityCompat.START);
+
+        /*switch (item.getItemId()) {
+            case R.id.student_common_fragment_1:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag1()).commit();
+                break;
+            case R.id.student_common_fragment_2:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag2()).commit();
+                break;
+            case R.id.student_common_fragment_3:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag3()).commit();
+                break;
+        }*/
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (student_drawer.isDrawerOpen(GravityCompat.START)) {
+            student_drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
