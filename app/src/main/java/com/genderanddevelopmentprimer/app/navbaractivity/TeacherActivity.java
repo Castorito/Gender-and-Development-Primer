@@ -14,6 +14,14 @@ import com.genderanddevelopmentprimer.app.R;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag1;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag2;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag3;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag1;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag2;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag3;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag4;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag5;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag6;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag7;
+import com.genderanddevelopmentprimer.app.teacherfragment.TeacherFrag8;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -59,7 +67,24 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new CommonFrag2()).commit();
         } else if (item.getItemId() == R.id.teacher_common_fragment_3) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new CommonFrag3()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag1()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag2()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag3()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_4) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag4()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_5) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag5()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_6) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag6()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_7) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag7()).commit();
+        } else if (item.getItemId() == R.id.teacher_fragment_8) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_teacher, new TeacherFrag8()).commit();
         }
+
         teacher_drawer.closeDrawer(GravityCompat.START);
 
         return true;

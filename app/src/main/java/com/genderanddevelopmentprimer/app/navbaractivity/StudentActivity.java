@@ -14,6 +14,9 @@ import com.genderanddevelopmentprimer.app.R;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag1;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag2;
 import com.genderanddevelopmentprimer.app.commonfragment.CommonFrag3;
+import com.genderanddevelopmentprimer.app.studentfragment.StudentFrag1;
+import com.genderanddevelopmentprimer.app.studentfragment.StudentFrag2;
+import com.genderanddevelopmentprimer.app.studentfragment.StudentFrag3;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -57,6 +60,12 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag2()).commit();
         } else if (item.getItemId() == R.id.student_common_fragment_3) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag3()).commit();
+        } else if (item.getItemId() == R.id.student_fragment_1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new StudentFrag1()).commit();
+        } else if (item.getItemId() == R.id.student_common_fragment_2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new StudentFrag2()).commit();
+        } else if (item.getItemId() == R.id.student_fragment_3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new StudentFrag3()).commit();
         }
         student_drawer.closeDrawer(GravityCompat.START);
 
