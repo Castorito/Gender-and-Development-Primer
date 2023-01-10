@@ -11,16 +11,15 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
-import com.genderanddevelopmentprimer.app.navbaractivity.StudentActivity;
-import com.genderanddevelopmentprimer.app.navbaractivity.TeacherActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,7 +34,7 @@ public class Register extends AppCompatActivity {
     Spinner userType, userSex;
     TextView btnregister, btnsignIn;
     LinearLayout mainLayout;
-    RelativeLayout loading;
+    ProgressBar loading;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     String userID;
@@ -58,14 +57,14 @@ public class Register extends AppCompatActivity {
         btnregister = findViewById(R.id.btn_register);
         btnsignIn = findViewById(R.id.btn_login);
 
-        loading = findViewById(R.id.loading_layout);
+        loading = findViewById(R.id.register_loading);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
         mainLayout = findViewById(R.id.register_form);
 
-        //regiter button
+        //register button
         btnregister.setOnClickListener(v -> {
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -130,9 +129,15 @@ public class Register extends AppCompatActivity {
                     user.put("email", varEmailAdd);
 
                     if (varUserType.equals("Teacher")) {
-                        startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
+                        Intent intent=new Intent(this, HomeScreen.class);
+                        intent.putExtra("identify","Teacher");
+                        startActivity(intent);
+                        //startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
                     } else if (varUserType.equals("Student")) {
-                        startActivity(new Intent(getApplicationContext(), StudentActivity.class));
+                        Intent intent=new Intent(this, HomeScreen.class);
+                        intent.putExtra("identify","Student");
+                        startActivity(intent);
+                        //startActivity(new Intent(getApplicationContext(), StudentActivity.class));
                     }
 
                     Toast.makeText(Register.this, "User Created!", Toast.LENGTH_SHORT).show();
@@ -140,13 +145,16 @@ public class Register extends AppCompatActivity {
                     finish();
                 } else {
                     Toast.makeText(Register.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                    loading.setVisibility(View.GONE);
+                    loading.setVisibility(View.INVISIBLE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             });
         });
 
-        btnsignIn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Login.class)));
+        btnsignIn.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            finish();
+        });
     }
 
     //check if there is internet
@@ -155,5 +163,16 @@ public class Register extends AppCompatActivity {
         if (cm.getActiveNetworkInfo() != null) {
             cm.getActiveNetworkInfo().isConnectedOrConnecting();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Warning!")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", null)
+                .show();
     }
 }

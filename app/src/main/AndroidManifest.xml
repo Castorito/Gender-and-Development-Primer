@@ -16,9 +16,15 @@
         android:theme="@style/Theme.GenderAndDevelopmentPrimer"
         tools:targetApi="31">
         <activity
+            android:name=".HomeScreen"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".navbaractivity.TeacherActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -46,7 +52,6 @@
         <activity
             android:name=".navbaractivity.StudentActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

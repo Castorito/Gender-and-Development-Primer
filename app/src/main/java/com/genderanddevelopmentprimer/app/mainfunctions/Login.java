@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
 import com.genderanddevelopmentprimer.app.navbaractivity.StudentActivity;
-import com.genderanddevelopmentprimer.app.navbaractivity.TeacherActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,7 +33,7 @@ public class Login extends AppCompatActivity {
     EditText loginEmail, loginPass;
     Button btnLogin;
     TextView btnsignUp, btnForgotPass;
-    RelativeLayout loading;
+    ProgressBar loading;
     LinearLayout mainLayout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -55,7 +54,7 @@ public class Login extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        loading = findViewById(R.id.loading_layout);
+        loading = findViewById(R.id.login_loading);
 
         mainLayout = findViewById(R.id.login_form);
 
@@ -107,23 +106,32 @@ public class Login extends AppCompatActivity {
                     documentReference.addSnapshotListener((value, error) -> {
                         assert value != null;
                         if (Objects.equals(value.getString("userType"), "Teacher")) {
-                            startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
+                            Intent intent=new Intent(this, HomeScreen.class);
+                            intent.putExtra("identify","Teacher");
+                            startActivity(intent);
+                            //startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
                         } else if (Objects.equals(value.getString("userType"), "Student")) {
-                            startActivity(new Intent(getApplicationContext(), StudentActivity.class));
+                            Intent intent=new Intent(this, HomeScreen.class);
+                            intent.putExtra("identify","Student");
+                            startActivity(intent);
+                            //startActivity(new Intent(getApplicationContext(), StudentActivity.class));
                         }
                     });
                     Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Toast.makeText(Login.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                    loading.setVisibility(View.GONE);
+                    loading.setVisibility(View.INVISIBLE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             });
 
         });
 
-        btnsignUp.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Register.class)));
+        btnsignUp.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), Register.class));
+            finish();
+        });
 
         btnForgotPass.setOnClickListener(v -> {
             EditText resetEmail = new EditText(v.getContext());
@@ -163,5 +171,16 @@ public class Login extends AppCompatActivity {
         if (cm.getActiveNetworkInfo() != null) {
             cm.getActiveNetworkInfo().isConnectedOrConnecting();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Warning!")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", null)
+                .show();
     }
 }
