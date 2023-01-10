@@ -7,19 +7,6 @@
     android:padding="20dp"
     tools:context=".mainfunctions.HomeScreen">
 
-
-    <TextView
-        android:id="@+id/identifier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,8 +22,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginBottom="30dp"
-            android:src="@mipmap/ic_launcher_round"
-            android:contentDescription="logo" />
+            android:contentDescription="logo"
+            android:src="@mipmap/ic_launcher_round" />
 
         <Button
             android:id="@+id/btn_lesson"
@@ -58,5 +45,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="About Us" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Log out" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

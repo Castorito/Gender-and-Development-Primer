@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
-import com.genderanddevelopmentprimer.app.navbaractivity.StudentActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -33,11 +31,10 @@ public class Login extends AppCompatActivity {
     EditText loginEmail, loginPass;
     Button btnLogin;
     TextView btnsignUp, btnForgotPass;
-    ProgressBar loading;
+    RelativeLayout loading;
     LinearLayout mainLayout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +55,9 @@ public class Login extends AppCompatActivity {
 
         mainLayout = findViewById(R.id.login_form);
 
+        //account logged in
         if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), StudentActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeScreen.class));
             finish();
         }
 
@@ -99,25 +97,8 @@ public class Login extends AppCompatActivity {
 
             fAuth.signInWithEmailAndPassword(varEmail, varPass).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-
-                    //get userType/retrieve data
-                    userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-                    DocumentReference documentReference = fStore.collection("users").document(userID);
-                    documentReference.addSnapshotListener((value, error) -> {
-                        assert value != null;
-                        if (Objects.equals(value.getString("userType"), "Teacher")) {
-                            Intent intent=new Intent(this, HomeScreen.class);
-                            intent.putExtra("identify","Teacher");
-                            startActivity(intent);
-                            //startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
-                        } else if (Objects.equals(value.getString("userType"), "Student")) {
-                            Intent intent=new Intent(this, HomeScreen.class);
-                            intent.putExtra("identify","Student");
-                            startActivity(intent);
-                            //startActivity(new Intent(getApplicationContext(), StudentActivity.class));
-                        }
-                    });
                     Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                     finish();
                 } else {
                     Toast.makeText(Login.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();

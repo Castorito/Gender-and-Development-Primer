@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     tools:context=".mainfunctions.Login">
 
     <ScrollView
+        android:padding="20dp"
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,14 +88,20 @@
         </LinearLayout>
     </ScrollView>
 
-    <ProgressBar
+    <RelativeLayout
         android:id="@+id/login_loading"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="invisible"
+        android:background="#80808080"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ProgressBar
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

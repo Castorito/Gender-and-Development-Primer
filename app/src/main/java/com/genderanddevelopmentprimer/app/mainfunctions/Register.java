@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
     Spinner userType, userSex;
     TextView btnregister, btnsignIn;
     LinearLayout mainLayout;
-    ProgressBar loading;
+    RelativeLayout loading;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     String userID;
@@ -128,20 +128,8 @@ public class Register extends AppCompatActivity {
                     user.put("province", varProvince);
                     user.put("email", varEmailAdd);
 
-                    if (varUserType.equals("Teacher")) {
-                        Intent intent=new Intent(this, HomeScreen.class);
-                        intent.putExtra("identify","Teacher");
-                        startActivity(intent);
-                        //startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
-                    } else if (varUserType.equals("Student")) {
-                        Intent intent=new Intent(this, HomeScreen.class);
-                        intent.putExtra("identify","Student");
-                        startActivity(intent);
-                        //startActivity(new Intent(getApplicationContext(), StudentActivity.class));
-                    }
-
                     Toast.makeText(Register.this, "User Created!", Toast.LENGTH_SHORT).show();
-                    documentReference.set(user).addOnSuccessListener(unused -> Log.d("GAD", "onSuccess: User Profile is created for " + userID)).addOnFailureListener(e -> Log.d("tag", "onFailure: " + e));
+                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                     finish();
                 } else {
                     Toast.makeText(Register.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();

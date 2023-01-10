@@ -35,16 +35,6 @@
                 android:id="@+id/localhelpdesk"
                 android:icon="@drawable/ic_helpdesk"
                 android:title="@string/local_help_desk_information" />
-            <item
-                android:id="@+id/about"
-                android:icon="@drawable/ic_about_us"
-                android:title="@string/about_us" />
         </menu>
     </item>
-    <item android:title="" />
-    <item
-        android:id="@+id/logout"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/log_out" />
-
 </menu>
