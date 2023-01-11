@@ -64,7 +64,6 @@ public class HomeScreen extends AppCompatActivity {
                 .setTitle("Warning!")
                 .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", null)
-                .show();
+                .setNegativeButton("No", null).show();
     }
 }

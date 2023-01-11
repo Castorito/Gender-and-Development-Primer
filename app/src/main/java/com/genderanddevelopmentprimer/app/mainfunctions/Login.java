@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -31,6 +34,7 @@ public class Login extends AppCompatActivity {
 
     EditText loginEmail, loginPass;
     Button btnLogin;
+    CheckBox showPass;
     TextView btnsignUp, btnForgotPass;
     RelativeLayout loading;
     LinearLayout mainLayout;
@@ -46,6 +50,8 @@ public class Login extends AppCompatActivity {
         loginEmail = findViewById(R.id.login_emailAddress);
         loginPass = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.btn_login);
+
+        showPass = findViewById(R.id.showPass);
 
         btnsignUp = findViewById(R.id.btn_signUp);
         btnForgotPass = findViewById(R.id.btn_forgotPass);
@@ -66,6 +72,14 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         }
+        //show password
+        showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                loginPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }else {
+                loginPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        });
 
         //Login Button
         btnLogin.setOnClickListener(v -> {
@@ -113,7 +127,7 @@ public class Login extends AppCompatActivity {
                         if (unverified == 3) {
                             unverified = 0;
                             new AlertDialog.Builder(this)
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
                                     .setTitle("Email still not verified!")
                                     .setMessage("Resend verification link?")
                                     .setPositiveButton("Yes", (dialog, which) -> user.sendEmailVerification().addOnSuccessListener(unused -> Toast.makeText(Login.this, "Email verification link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show()))
@@ -163,9 +177,7 @@ public class Login extends AppCompatActivity {
                 String email = resetEmail.getText().toString().trim();
                 fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
             });
-            passwordResetDialog.setNegativeButton("No", (dialog, which) -> {
-                //close dialog
-            });
+            passwordResetDialog.setNegativeButton("No", null);
 
             passwordResetDialog.create().show();
         });
@@ -186,7 +198,6 @@ public class Login extends AppCompatActivity {
                 .setTitle("Warning!")
                 .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", null)
-                .show();
+                .setNegativeButton("No", null).show();
     }
 }

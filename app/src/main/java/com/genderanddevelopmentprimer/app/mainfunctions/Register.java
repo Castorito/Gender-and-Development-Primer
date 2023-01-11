@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,6 +36,7 @@ import java.util.Objects;
 public class Register extends AppCompatActivity {
 
     EditText firstName, lastName, municipality, province, emailAddress, password, retypePass;
+    CheckBox showPass;
     Spinner userType, userSex;
     TextView btnregister, btnsignIn;
     LinearLayout mainLayout;
@@ -54,6 +60,8 @@ public class Register extends AppCompatActivity {
         password = findViewById(R.id.register_password);
         retypePass = findViewById(R.id.register_retypePass);
 
+        showPass = findViewById(R.id.showPassReg);
+
         btnregister = findViewById(R.id.btn_register);
         btnsignIn = findViewById(R.id.btn_login);
 
@@ -63,6 +71,45 @@ public class Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         mainLayout = findViewById(R.id.register_form);
+
+        //show password
+        showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                retypePass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                retypePass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        });
+
+        retypePass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!password.getText().toString().equals(retypePass.getText().toString())) {
+                    password.requestFocus();
+                    password.setError("");
+
+                    retypePass.requestFocus();
+                    retypePass.setError("Password not the same!");
+
+                } else {
+                    retypePass.setError(null);
+                    password.setError(null);
+
+                }
+            }
+        });
 
         //register button
         btnregister.setOnClickListener(v -> {
@@ -84,28 +131,26 @@ public class Register extends AppCompatActivity {
 
             if (TextUtils.isEmpty(varFName)) {
                 firstName.setError("Enter your first name.");
-                return;
-            } else if (TextUtils.isEmpty(varLName)) {
+            }
+            if (TextUtils.isEmpty(varLName)) {
                 lastName.setError("Enter your last name.");
-                return;
-            } else if (TextUtils.isEmpty(varMunicipality)) {
+            }
+            if (TextUtils.isEmpty(varMunicipality)) {
                 municipality.setError("Enter your municipality.");
-                return;
-            } else if (TextUtils.isEmpty(varProvince)) {
+            }
+            if (TextUtils.isEmpty(varProvince)) {
                 province.setError("Enter your province.");
-                return;
-            } else if (TextUtils.isEmpty(varEmailAdd)) {
+            }
+            if (TextUtils.isEmpty(varEmailAdd)) {
                 emailAddress.setError("Enter an email address.");
-                return;
-            } else if (TextUtils.isEmpty(varPassword)) {
+            }
+            if (TextUtils.isEmpty(varPassword)) {
                 password.setError("Enter a password.");
-                return;
-            } else if (TextUtils.isEmpty(varRetypePass)) {
+            }
+            if (TextUtils.isEmpty(varRetypePass)) {
                 retypePass.setError("Retype your password.");
                 return;
-            }
-
-            if (!varPassword.equals(varRetypePass)) {
+            } else if (!varPassword.equals(varRetypePass)) {
                 retypePass.setError("Password not the same!");
                 return;
             }
@@ -166,12 +211,10 @@ public class Register extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Warning!")
                 .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", null)
-                .show();
+                .setNegativeButton("No", null).show();
     }
 }

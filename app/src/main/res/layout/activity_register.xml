@@ -122,6 +122,12 @@
                 android:hint="Retype Password"
                 android:inputType="textPassword" />
 
+            <CheckBox
+                android:id="@+id/showPassReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Password" />
+
             <Button
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
@@ -153,6 +159,6 @@
         <ProgressBar
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
