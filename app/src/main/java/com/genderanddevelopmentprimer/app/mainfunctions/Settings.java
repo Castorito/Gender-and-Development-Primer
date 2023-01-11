@@ -1,10 +1,13 @@
 package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import java.util.Map;
 public class Settings extends AppCompatActivity {
     EditText fName, lName, email, municipality, province;
     TextView sex, usertype;
+    ImageView editpic;
     Button btneditProfile, btnChangePass;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -35,6 +39,8 @@ public class Settings extends AppCompatActivity {
 
         btneditProfile = findViewById(R.id.btn_editProfile);
         btnChangePass = findViewById(R.id.btn_changePass);
+
+        editpic = findViewById(R.id.edit_icon);
 
         fName = findViewById(R.id.fName);
         lName = findViewById(R.id.lName);
@@ -60,9 +66,19 @@ public class Settings extends AppCompatActivity {
             usertype.setText(value.getString("userType"));
         });
 
+        editpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //edit profile pic
+                Toast.makeText(Settings.this, "Clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btnChangePass.setOnClickListener(v -> {
 
-            EditText resetPass = new EditText(v.getContext());
+            EditText resetPass = new EditText(this);
+            resetPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
 
             AlertDialog.Builder changePass = new AlertDialog.Builder(this);
             changePass.setMessage("Enter new password:");
@@ -72,8 +88,8 @@ public class Settings extends AppCompatActivity {
             FrameLayout container = new FrameLayout(Settings.this);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-            params.leftMargin = 50;
-            params.rightMargin = 50;
+            params.leftMargin = 70;
+            params.rightMargin = 70;
 
             resetPass.setLayoutParams(params);
             container.addView(resetPass);

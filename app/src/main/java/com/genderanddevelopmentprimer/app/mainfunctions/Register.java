@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -127,10 +127,21 @@ public class Register extends AppCompatActivity {
                     user.put("municipality", varMunicipality);
                     user.put("province", varProvince);
                     user.put("email", varEmailAdd);
+                    documentReference.set(user).addOnSuccessListener(unused -> {
 
-                    Toast.makeText(Register.this, "User Created!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-                    finish();
+                        Toast.makeText(Register.this, "User Created!", Toast.LENGTH_SHORT).show();
+
+                        //verify email
+                        FirebaseUser verifyUser = fAuth.getCurrentUser();
+                        Objects.requireNonNull(verifyUser).sendEmailVerification().addOnSuccessListener(unused1 -> {
+                            Toast.makeText(Register.this, "Verification email sent!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Verify email first before logging in!", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+
+                        startActivity(new Intent(getApplicationContext(), Login.class));
+                        finish();
+
+                    }).addOnFailureListener(e -> Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show());
                 } else {
                     Toast.makeText(Register.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     loading.setVisibility(View.INVISIBLE);

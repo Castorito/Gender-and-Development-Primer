@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -35,6 +36,7 @@ public class Login extends AppCompatActivity {
     LinearLayout mainLayout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    int unverified = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +59,23 @@ public class Login extends AppCompatActivity {
 
         //account logged in
         if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-            finish();
+            FirebaseUser newuser = fAuth.getCurrentUser();
+
+            if (newuser.isEmailVerified()) {
+                startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                finish();
+            }
         }
 
         //Login Button
         btnLogin.setOnClickListener(v -> {
-
             //hide keyboard
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
 
             isOnline();
+
+            unverified++;
 
             String varEmail = loginEmail.getText().toString().trim();
             String varPass = loginPass.getText().toString().trim();
@@ -97,16 +104,34 @@ public class Login extends AppCompatActivity {
 
             fAuth.signInWithEmailAndPassword(varEmail, varPass).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-                    finish();
+                    FirebaseUser user = fAuth.getCurrentUser();
+                    if (!user.isEmailVerified()) {
+                        Toast.makeText(this, "Email not verified", Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.INVISIBLE);
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                        if (unverified == 3) {
+                            unverified = 0;
+                            new AlertDialog.Builder(this)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setTitle("Email still not verified!")
+                                    .setMessage("Resend verification link?")
+                                    .setPositiveButton("Yes", (dialog, which) -> user.sendEmailVerification().addOnSuccessListener(unused -> Toast.makeText(Login.this, "Email verification link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show()))
+                                    .setNegativeButton("No", null)
+                                    .show();
+                        }
+                    } else {
+                        Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                        finish();
+                    }
+
                 } else {
-                    Toast.makeText(Login.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Error: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     loading.setVisibility(View.INVISIBLE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             });
-
         });
 
         btnsignUp.setOnClickListener(v -> {
