@@ -6,12 +6,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,6 @@ import java.util.Map;
 public class Settings extends AppCompatActivity {
     EditText fName, lName, email, municipality, province;
     TextView sex, usertype;
-    ImageView editpic;
     Button btneditProfile, btnChangePass;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -42,8 +39,6 @@ public class Settings extends AppCompatActivity {
 
         btneditProfile = findViewById(R.id.btn_editProfile);
         btnChangePass = findViewById(R.id.btn_changePass);
-
-        editpic = findViewById(R.id.edit_icon);
 
         fName = findViewById(R.id.fName);
         lName = findViewById(R.id.lName);
@@ -69,20 +64,10 @@ public class Settings extends AppCompatActivity {
             usertype.setText(value.getString("userType"));
         });
 
-        editpic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //edit profile pic
-                Toast.makeText(Settings.this, "Clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         btnChangePass.setOnClickListener(v -> showCustomChangePass());
 
         btneditProfile.setOnClickListener(v -> {
-
             if (btneditProfile.getText().equals("Edit Profile")) {
-
                 fName.setEnabled(true);
                 lName.setEnabled(true);
                 email.setEnabled(true);
@@ -91,22 +76,38 @@ public class Settings extends AppCompatActivity {
                 btneditProfile.setText("Save");
 
             } else if (btneditProfile.getText().equals("Save")) {
+                DocumentReference check = fStore.collection("users").document(user.getUid());
+                check.addSnapshotListener((value, error) -> {
+                    assert value != null;
+                    if (fName.getText().toString().equals(value.getString("firstName"))
+                            && lName.getText().toString().equals(value.getString("lastName"))
+                            && email.getText().toString().equals(value.getString("email"))
+                            && municipality.getText().toString().equals(value.getString("municipality"))
+                            && province.getText().toString().equals(value.getString("province"))) {
+                        fName.setEnabled(false);
+                        lName.setEnabled(false);
+                        email.setEnabled(false);
+                        municipality.setEnabled(false);
+                        province.setEnabled(false);
+                        btneditProfile.setText("Edit Profile");
+                    } else {
+                        String varEmail = email.getText().toString();
 
-                String varEmail = email.getText().toString();
-
-                user.updateEmail(varEmail).addOnSuccessListener(unused -> {
-                    DocumentReference documentRef = fStore.collection("users").document(user.getUid());
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("firstName", fName.getText().toString());
-                    user.put("lastName", lName.getText().toString());
-                    user.put("municipality", municipality.getText().toString());
-                    user.put("province", province.getText().toString());
-                    user.put("email", varEmail);
-                    documentRef.update(user).addOnSuccessListener(unused1 -> {
-                        Toast.makeText(Settings.this, "Update Successful!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    });
-                }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                        user.updateEmail(varEmail).addOnSuccessListener(unused -> {
+                            DocumentReference documentRef = fStore.collection("users").document(user.getUid());
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("firstName", fName.getText().toString());
+                            user.put("lastName", lName.getText().toString());
+                            user.put("municipality", municipality.getText().toString());
+                            user.put("province", province.getText().toString());
+                            user.put("email", varEmail);
+                            documentRef.update(user).addOnSuccessListener(unused1 -> {
+                                Toast.makeText(Settings.this, "Update Successful!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            });
+                        }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+                });
             }
         });
     }
@@ -146,9 +147,9 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!retype.getText().toString().equals(newPass.getText().toString())){
+                if (!retype.getText().toString().equals(newPass.getText().toString())) {
                     retype.setError("Password not the same!");
-                    if (retype.getText().toString().equals("")){
+                    if (retype.getText().toString().equals("")) {
                         retype.setError(null);
                     }
                 } else {
@@ -173,7 +174,7 @@ public class Settings extends AppCompatActivity {
 
                 if (!newPass.getText().toString().equals(retype.getText().toString())) {
                     retype.setError("Password not the same!");
-                    if (retype.getText().toString().equals("")){
+                    if (retype.getText().toString().equals("")) {
                         retype.setError(null);
                     }
                 } else {
@@ -188,11 +189,10 @@ public class Settings extends AppCompatActivity {
 
             if (varPass.length() < 8) {
                 newPass.setError("Password must be 8 characters or longer!");
-            } else if (!varPass.equals(varRetype)){
+            } else if (!varPass.equals(varRetype)) {
                 newPass.setError("Passwords not the same!");
                 retype.setError("Passwords not the same!");
-            }
-            else {
+            } else {
                 user.updatePassword(varPass).addOnSuccessListener(unused -> {
                     Toast.makeText(Settings.this, "Password changed!", Toast.LENGTH_SHORT).show();
                     changepass.dismiss();

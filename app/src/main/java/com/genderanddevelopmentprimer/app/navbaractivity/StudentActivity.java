@@ -62,7 +62,7 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new CommonFrag3()).commit();
         } else if (item.getItemId() == R.id.student_fragment_1) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new StudentFrag1()).commit();
-        } else if (item.getItemId() == R.id.student_common_fragment_2) {
+        } else if (item.getItemId() == R.id.student_fragment_2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new StudentFrag2()).commit();
         } else if (item.getItemId() == R.id.student_fragment_3) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_student, new StudentFrag3()).commit();

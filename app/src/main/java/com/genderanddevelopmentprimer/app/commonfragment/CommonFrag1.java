@@ -26,6 +26,13 @@ public class CommonFrag1 extends Fragment {
         View v = inflater.inflate(R.layout.common_frag_1, container, false);
         PDFView pdfView = v.findViewById(R.id.commonfrag1);
         pdfView.fromAsset("Common Fragment1.pdf")
+                .onLoad(new OnLoadCompleteListener() {
+                    @Override
+                    public void loadComplete(int nbPages) {
+                        lastPage = nbPages;
+                        Toast.makeText(getActivity(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .onPageChange(new OnPageChangeListener() {
                     @Override
                     public void onPageChanged(int page, int pageCount) {
@@ -35,13 +42,6 @@ public class CommonFrag1 extends Fragment {
                         } else {
                             quizBtn.setVisibility(View.GONE);
                         }
-                    }
-                })
-                .onLoad(new OnLoadCompleteListener() {
-                    @Override
-                    public void loadComplete(int nbPages) {
-                        lastPage = nbPages;
-                        Toast.makeText(getActivity(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .load();

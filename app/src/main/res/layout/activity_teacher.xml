@@ -27,6 +27,7 @@
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
+        app:itemMaxLines="3"
         android:id="@+id/nav_view_teacher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

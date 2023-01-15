@@ -43,7 +43,6 @@ public class Register extends AppCompatActivity {
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     String userID;
-    Boolean isBackPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
