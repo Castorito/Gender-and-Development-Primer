@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
@@ -44,6 +43,7 @@ public class Register extends AppCompatActivity {
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     String userID;
+    Boolean isBackPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,12 +209,22 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
+        if (isBackPressedOnce){
+            super.onBackPressed();
+            return;
+        }
+        Toast.makeText(this, "Press again to confirm exit.", Toast.LENGTH_SHORT).show();
+        isBackPressedOnce = true;
+        new Handler().postDelayed((Runnable) () -> {
+            isBackPressedOnce = false;
+
+        }, 2000);
+        *//*new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Warning!")
                 .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", null).show();
-    }
+                .setNegativeButton("No", null).show();*//*
+    }*/
 }

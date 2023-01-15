@@ -1,17 +1,20 @@
 package com.genderanddevelopmentprimer.app.mainfunctions;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
@@ -74,50 +77,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        btnChangePass.setOnClickListener(v -> {
-
-            EditText resetPass = new EditText(this);
-            resetPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-
-            AlertDialog.Builder changePass = new AlertDialog.Builder(this);
-            changePass.setMessage("Enter new password:");
-            changePass.setTitle("Change Password");
-
-            //add padding to textbox in forgot pass
-            FrameLayout container = new FrameLayout(Settings.this);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-            params.leftMargin = 70;
-            params.rightMargin = 70;
-
-            resetPass.setLayoutParams(params);
-            container.addView(resetPass);
-
-            changePass.setView(resetPass);
-            changePass.setView(container);
-
-            changePass.setPositiveButton("OK", null);
-            changePass.setNegativeButton("Cancel", null);
-
-            AlertDialog dialog = changePass.create();
-            dialog.show();
-            //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v12 -> {
-                String newPass = resetPass.getText().toString();
-
-                if (newPass.length() < 8) {
-                    resetPass.setError("Password must be 8 characters or longer!");
-                } else {
-                    user.updatePassword(newPass).addOnSuccessListener(unused -> {
-                        Toast.makeText(Settings.this, "Password changed!", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                }
-            });
-
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(v1 -> dialog.dismiss());
-        });
+        btnChangePass.setOnClickListener(v -> showCustomChangePass());
 
         btneditProfile.setOnClickListener(v -> {
 
@@ -149,5 +109,99 @@ public class Settings extends AppCompatActivity {
                 }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
+    }
+
+    void showCustomChangePass() {
+        Dialog changepass = new Dialog(Settings.this);
+        changepass.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        changepass.setContentView(R.layout.password_change_dialog_box);
+        changepass.setCancelable(false);
+
+        EditText newPass = changepass.findViewById(R.id.newPass);
+        EditText retype = changepass.findViewById(R.id.retypeNewPass);
+        CheckBox showPass = changepass.findViewById(R.id.showChangePass);
+        Button btnsave = changepass.findViewById(R.id.btn_savePass);
+        Button btncancel = changepass.findViewById(R.id.btn_cancelPass);
+
+        showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                newPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                retype.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                newPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                retype.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        });
+
+        newPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!retype.getText().toString().equals(newPass.getText().toString())){
+                    retype.setError("Password not the same!");
+                    if (retype.getText().toString().equals("")){
+                        retype.setError(null);
+                    }
+                } else {
+                    retype.setError(null);
+                }
+            }
+        });
+
+        retype.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (!newPass.getText().toString().equals(retype.getText().toString())) {
+                    retype.setError("Password not the same!");
+                    if (retype.getText().toString().equals("")){
+                        retype.setError(null);
+                    }
+                } else {
+                    retype.setError(null);
+                }
+            }
+
+        });
+        btnsave.setOnClickListener(v -> {
+            String varPass = newPass.getText().toString();
+            String varRetype = retype.getText().toString();
+
+            if (varPass.length() < 8) {
+                newPass.setError("Password must be 8 characters or longer!");
+            } else if (!varPass.equals(varRetype)){
+                newPass.setError("Passwords not the same!");
+                retype.setError("Passwords not the same!");
+            }
+            else {
+                user.updatePassword(varPass).addOnSuccessListener(unused -> {
+                    Toast.makeText(Settings.this, "Password changed!", Toast.LENGTH_SHORT).show();
+                    changepass.dismiss();
+                }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
+
+        btncancel.setOnClickListener(v -> changepass.dismiss());
+        changepass.show();
+
     }
 }

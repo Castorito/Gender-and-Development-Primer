@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -40,6 +41,7 @@ public class Login extends AppCompatActivity {
     LinearLayout mainLayout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    Boolean isBackPressedOnce = false;
     int unverified = 0;
 
     @Override
@@ -141,17 +143,14 @@ public class Login extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(Login.this, "Error: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     loading.setVisibility(View.INVISIBLE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             });
         });
 
-        btnsignUp.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), Register.class));
-            finish();
-        });
+        btnsignUp.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Register.class)));
 
         btnForgotPass.setOnClickListener(v -> {
             EditText resetEmail = new EditText(v.getContext());
@@ -193,11 +192,12 @@ public class Login extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Warning!")
-                .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", null).show();
+        if (isBackPressedOnce){
+            super.onBackPressed();
+            return;
+        }
+        Toast.makeText(this, "Press again to confirm exit.", Toast.LENGTH_SHORT).show();
+        isBackPressedOnce = true;
+        new Handler().postDelayed((Runnable) () -> isBackPressedOnce = false, 2000);
     }
 }

@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comfrag1layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/commonfrag1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <Button
+        android:id="@+id/btn_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CommonFrag1"
-        android:layout_centerInParent="true"
-        android:textSize="40sp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:drawableEnd="@drawable/ic_book"
+        android:text="Take quiz" />
+
 </RelativeLayout>
