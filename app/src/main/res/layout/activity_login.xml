@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainfunctions.Login">
+    tools:context=".mainfunctions.Login"
+    android:theme="@style/ThemeOverlay.Design.TextInputEditText.">
 
     <ScrollView
-        android:padding="14dp"
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,24 +27,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:contentDescription="logo"
-                    android:src="@mipmap/ic_launcher_round" />
+                    android:src="@drawable/logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:text="@string/app_name"
-                    android:textSize="24sp"
                     android:textAlignment="textStart"
-                    android:textStyle="bold" />
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif-monospace"/>
             </LinearLayout>
 
             <EditText
@@ -52,22 +54,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
+                android:autofillHints="emailAddress"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
             <CheckBox
                 android:id="@+id/showPass"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show Password"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start"
+                android:text="Show Password" />
 
             <Button
                 android:id="@+id/btn_login"
@@ -99,8 +101,8 @@
         android:id="@+id/login_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
         android:background="#80808080"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

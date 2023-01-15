@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainfunctions.Register">
+    tools:context=".mainfunctions.Register"
+    android:theme="@style/ThemeOverlay.Design.TextInputEditText.">
 
     <ScrollView
         android:layout_width="match_parent"

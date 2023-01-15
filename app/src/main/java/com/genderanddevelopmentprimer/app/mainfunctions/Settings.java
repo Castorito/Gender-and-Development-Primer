@@ -1,6 +1,7 @@
 package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,6 +37,18 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        //set background
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
+                break;
+        }
 
         btneditProfile = findViewById(R.id.btn_editProfile);
         btnChangePass = findViewById(R.id.btn_changePass);
@@ -147,11 +160,10 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!retype.getText().toString().equals(newPass.getText().toString())) {
+                if (newPass.length() < 8) {
+                    newPass.setError("Password must be 8 characters or longer!");
+                } else if (!newPass.getText().toString().equals(retype.getText().toString())) {
                     retype.setError("Password not the same!");
-                    if (retype.getText().toString().equals("")) {
-                        retype.setError(null);
-                    }
                 } else {
                     retype.setError(null);
                 }
@@ -171,14 +183,12 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                if (!newPass.getText().toString().equals(retype.getText().toString())) {
-                    retype.setError("Password not the same!");
-                    if (retype.getText().toString().equals("")) {
-                        retype.setError(null);
-                    }
-                } else {
+                if (!retype.getText().toString().equals(newPass.getText().toString())) {
+                    newPass.setError("Password not the same!");
+                } else if (retype.getText().toString().equals("")) {
                     retype.setError(null);
+                } else {
+                    newPass.setError(null);
                 }
             }
 

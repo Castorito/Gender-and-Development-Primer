@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".mainfunctions.HomeScreen">
+    tools:context=".mainfunctions.HomeScreen"
+    android:theme="@style/ThemeOverlay.Design.TextInputEditText.">
 
     <LinearLayout
         android:layout_width="match_parent"

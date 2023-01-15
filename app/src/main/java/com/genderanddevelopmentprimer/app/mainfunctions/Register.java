@@ -2,7 +2,7 @@ package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -49,6 +49,17 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
+                break;
+        }
+
         firstName = findViewById(R.id.fName);
         lastName = findViewById(R.id.lName);
         userType = findViewById(R.id.userType);
@@ -82,6 +93,29 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (password.length() < 8) {
+                    password.setError("Password must be 8 characters or longer!");
+                } else if (!password.getText().toString().equals(retypePass.getText().toString())) {
+                    retypePass.setError("Password not the same!");
+                } else {
+                    retypePass.setError(null);
+                }
+            }
+        });
+
         retypePass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,19 +129,15 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!password.getText().toString().equals(retypePass.getText().toString())) {
-                    password.requestFocus();
-                    password.setError("");
-
-                    retypePass.requestFocus();
-                    retypePass.setError("Password not the same!");
-
-                } else {
+                if (!retypePass.getText().toString().equals(password.getText().toString())) {
+                    password.setError("Password not the same!");
+                } else if (retypePass.getText().toString().equals("")) {
                     retypePass.setError(null);
+                } else {
                     password.setError(null);
-
                 }
             }
+
         });
 
         //register button
@@ -115,8 +145,6 @@ public class Register extends AppCompatActivity {
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
-
-            isOnline();
 
             String varFName = firstName.getText().toString().trim();
             String varLName = lastName.getText().toString().trim();
@@ -198,14 +226,6 @@ public class Register extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         });
-    }
-
-    //check if there is internet
-    public void isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm.getActiveNetworkInfo() != null) {
-            cm.getActiveNetworkInfo().isConnectedOrConnecting();
-        }
     }
 
     /*@Override

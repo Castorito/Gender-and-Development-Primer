@@ -2,7 +2,7 @@ package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -49,6 +49,18 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //set background
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
+                break;
+        }
+
         loginEmail = findViewById(R.id.login_emailAddress);
         loginPass = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.btn_login);
@@ -76,9 +88,9 @@ public class Login extends AppCompatActivity {
         }
         //show password
         showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
+            if (isChecked) {
                 loginPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            }else {
+            } else {
                 loginPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         });
@@ -88,8 +100,6 @@ public class Login extends AppCompatActivity {
             //hide keyboard
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
-
-            isOnline();
 
             unverified++;
 
@@ -182,17 +192,9 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    //check of there is internet connection
-    public void isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm.getActiveNetworkInfo() != null) {
-            cm.getActiveNetworkInfo().isConnectedOrConnecting();
-        }
-    }
-
     @Override
     public void onBackPressed() {
-        if (isBackPressedOnce){
+        if (isBackPressedOnce) {
             super.onBackPressed();
             return;
         }
