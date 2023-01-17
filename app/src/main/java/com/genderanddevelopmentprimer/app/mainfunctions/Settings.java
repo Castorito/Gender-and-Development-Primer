@@ -38,17 +38,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //set background
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
-
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
+        setBackground();
 
         btneditProfile = findViewById(R.id.btn_editProfile);
         btnChangePass = findViewById(R.id.btn_changePass);
@@ -125,7 +115,23 @@ public class Settings extends AppCompatActivity {
         });
     }
 
-    void showCustomChangePass() {
+    private void setBackground() {
+        //set background
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
+                break;
+
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
+                break;
+        }
+    }
+
+    private void showCustomChangePass() {
         Dialog changepass = new Dialog(Settings.this);
         changepass.requestWindowFeature(Window.FEATURE_NO_TITLE);
         changepass.setContentView(R.layout.password_change_dialog_box);

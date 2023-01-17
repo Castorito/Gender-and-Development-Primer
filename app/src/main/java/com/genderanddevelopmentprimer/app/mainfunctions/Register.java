@@ -49,16 +49,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
-
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
+        setBackground();
 
         firstName = findViewById(R.id.fName);
         lastName = findViewById(R.id.lName);
@@ -228,22 +219,19 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    /*@Override
-    public void onBackPressed() {
-        if (isBackPressedOnce){
-            super.onBackPressed();
-            return;
-        }
-        Toast.makeText(this, "Press again to confirm exit.", Toast.LENGTH_SHORT).show();
-        isBackPressedOnce = true;
-        new Handler().postDelayed((Runnable) () -> {
-            isBackPressedOnce = false;
+    private void setBackground() {
+        //set background
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
+                break;
 
-        }, 2000);
-        *//*new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Warning!")
-                .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", null).show();*//*
-    }*/
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
+                break;
+        }
+    }
 }

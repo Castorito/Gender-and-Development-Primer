@@ -49,17 +49,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //set background
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
+        setBackground();
 
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
 
         loginEmail = findViewById(R.id.login_emailAddress);
         loginPass = findViewById(R.id.login_password);
@@ -190,6 +181,22 @@ public class Login extends AppCompatActivity {
 
             passwordResetDialog.create().show();
         });
+    }
+
+    private void setBackground() {
+        //set background
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
+                break;
+
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
+                break;
+        }
     }
 
     @Override
