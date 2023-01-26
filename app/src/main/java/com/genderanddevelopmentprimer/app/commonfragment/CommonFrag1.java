@@ -1,5 +1,6 @@
 package com.genderanddevelopmentprimer.app.commonfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.genderanddevelopmentprimer.app.R;
+import com.genderanddevelopmentprimer.app.mainfunctions.Quiz;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
@@ -25,6 +27,8 @@ public class CommonFrag1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.common_frag_1, container, false);
         PDFView pdfView = v.findViewById(R.id.commonfrag1);
+        Button quizBtn = v.findViewById(R.id.btn_quiz);
+
         pdfView.fromAsset("Common Fragment1.pdf")
                 .onLoad(new OnLoadCompleteListener() {
                     @Override
@@ -36,7 +40,6 @@ public class CommonFrag1 extends Fragment {
                 .onPageChange(new OnPageChangeListener() {
                     @Override
                     public void onPageChanged(int page, int pageCount) {
-                        Button quizBtn = v.findViewById(R.id.btn_quiz);
                         if (page == lastPage - 1) {
                             quizBtn.setVisibility(View.VISIBLE);
                         } else {
@@ -45,6 +48,13 @@ public class CommonFrag1 extends Fragment {
                     }
                 })
                 .load();
+
+        quizBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), Quiz.class));
+            }
+        });
         return v;
     }
 }

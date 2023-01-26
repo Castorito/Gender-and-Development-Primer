@@ -16,6 +16,9 @@
         android:theme="@style/Theme.GenderAndDevelopmentPrimer"
         tools:targetApi="31">
         <activity
+            android:name=".mainfunctions.Quiz"
+            android:exported="false" />
+        <activity
             android:name=".mainfunctions.Settings"
             android:exported="false">
             <meta-data
