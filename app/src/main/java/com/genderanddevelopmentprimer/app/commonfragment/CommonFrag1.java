@@ -46,13 +46,15 @@ public class CommonFrag1 extends Fragment {
                             quizBtn.setVisibility(View.GONE);
                         }
                     }
-                })
+                }).spacing(2)
                 .load();
 
         quizBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), Quiz.class));
+                Intent i = new Intent(new Intent(getActivity(), Quiz.class));
+                i.putExtra("Value", "cf1");
+                startActivity(i);
             }
         });
         return v;

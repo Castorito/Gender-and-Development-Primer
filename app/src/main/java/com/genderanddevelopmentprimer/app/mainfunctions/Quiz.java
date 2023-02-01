@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import java.util.Objects;
 public class Quiz extends AppCompatActivity {
 
     FirebaseFirestore fStore;
+    String val;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +41,20 @@ public class Quiz extends AppCompatActivity {
 
         fStore = FirebaseFirestore.getInstance();
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        val = getIntent().getExtras().getString("Value");
 
-
-        //create scrollview layout
         ScrollView sv = new ScrollView(this);
+        sv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        //create a layout
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        //create a button
-        Button btn = new Button(Quiz.this);
+        Button btn = new Button(this);
         btn.setText("Submit");
-        btn.setLayoutParams(params);
+        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
 
-        //create a layout param for the layout
-        LinearLayout.LayoutParams layoutParam =
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParam.setMargins(20, 100, 20, 20);
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(20,20,20,50);
 
-        ViewGroup.LayoutParams svParams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        sv.addView(layout, layoutParam);
-
-        DocumentReference docRef = fStore.collection("questions").document("questionnaire");
+        DocumentReference docRef = fStore.collection("questions").document(val);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -77,36 +62,38 @@ public class Quiz extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Map<String, Object> map = document.getData();
-
-                        DocumentReference documentReference = fStore.collection("questions").document("questionnaire");
+                        DocumentReference documentReference = fStore.collection("questions").document(val);
                         documentReference.addSnapshotListener(Quiz.this, (value, error) -> {
                             for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
-                                assert value != null;
 
                                 TextView tv = new TextView(Quiz.this);
                                 tv.setId(i);
-                                tv.setText(value.getString("Q" + i));
-                                tv.setTextSize(20);
+                                tv.setText(String.format("%d. %s", i, Objects.requireNonNull(value).getString("Q" + i)));
+                                tv.setTextSize(17);
                                 tv.setBackgroundColor(Color.parseColor("#95808080"));
-                                tv.setLayoutParams(params2);
+                                tv.setLayoutParams(new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                                 EditText ans = new EditText(Quiz.this);
                                 ans.setId(View.generateViewId());
                                 ans.setHint("Answer " + i);
                                 ans.setInputType(InputType.TYPE_CLASS_TEXT);
-                                ans.setLayoutParams(params);
+                                ans.setLayoutParams(new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                                layout.addView(tv);
-                                layout.addView(ans);
+                                linearLayout.addView(tv);
+                                linearLayout.addView(ans);
                             }
 
                             //---adds the button---
-                            layout.addView(btn);
+                            linearLayout.addView(btn);
                         });
                     }
                 }
             }
         });
+
+        sv.addView(linearLayout);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +102,7 @@ public class Quiz extends AppCompatActivity {
             }
         });
 
-        this.addContentView(sv, svParams);
+        this.addContentView(sv, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private void setBackground() {

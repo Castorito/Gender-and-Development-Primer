@@ -7,8 +7,8 @@
     <com.github.barteksc.pdfviewer.PDFView
         android:id="@+id/commonfrag1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.github.barteksc.pdfviewer.PDFView>
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
     <Button
         android:id="@+id/btn_quiz"
         android:layout_width="wrap_content"
