@@ -4,8 +4,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,12 +14,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +27,8 @@ import java.util.Objects;
 public class Quiz extends AppCompatActivity {
 
     FirebaseFirestore fStore;
-    String val;
+    EditText ans;
+    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,65 +39,91 @@ public class Quiz extends AppCompatActivity {
 
         fStore = FirebaseFirestore.getInstance();
 
-        val = getIntent().getExtras().getString("Value");
+        //identify which fragment a button is clicked
+        String val = getIntent().getExtras().getString("identifier");
 
         ScrollView sv = new ScrollView(this);
         sv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         Button btn = new Button(this);
         btn.setText("Submit");
-        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+
+        btn.setLayoutParams(params);
 
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(20,20,20,50);
+        linearLayout.setPadding(40,20,40,50);
 
         DocumentReference docRef = fStore.collection("questions").document(val);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Map<String, Object> map = document.getData();
-                        DocumentReference documentReference = fStore.collection("questions").document(val);
-                        documentReference.addSnapshotListener(Quiz.this, (value, error) -> {
-                            for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Map<String, Object> map = document.getData();
+                    DocumentReference documentReference = fStore.collection("questions").document(val);
+                    documentReference.addSnapshotListener(Quiz.this, (value, error) -> {
+                        for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
 
-                                TextView tv = new TextView(Quiz.this);
-                                tv.setId(i);
-                                tv.setText(String.format("%d. %s", i, Objects.requireNonNull(value).getString("Q" + i)));
-                                tv.setTextSize(17);
-                                tv.setBackgroundColor(Color.parseColor("#95808080"));
-                                tv.setLayoutParams(new LinearLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                            TextView tv = new TextView(Quiz.this);
+                            tv.setText(String.format("%d. %s", i, value.getString("Q" + i)));
+                            tv.setTextSize(17);
+                            tv.setBackgroundColor(Color.parseColor("#95808080"));
+                            tv.setLayoutParams(new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                                EditText ans = new EditText(Quiz.this);
-                                ans.setId(View.generateViewId());
-                                ans.setHint("Answer " + i);
-                                ans.setInputType(InputType.TYPE_CLASS_TEXT);
-                                ans.setLayoutParams(new LinearLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                            ans = new EditText(Quiz.this);
+                            ans.setId(i);
+                            ans.setHint("Answer");
+                            ans.setInputType(InputType.TYPE_CLASS_TEXT);
+                            ans.setLayoutParams(new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                                linearLayout.addView(tv);
-                                linearLayout.addView(ans);
-                            }
+                            linearLayout.addView(tv);
+                            linearLayout.addView(ans);
+                        }
 
-                            //---adds the button---
-                            linearLayout.addView(btn);
-                        });
-                    }
+                        //---adds the button---
+                        linearLayout.addView(btn);
+                    });
                 }
             }
         });
 
         sv.addView(linearLayout);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Quiz.this, "Clicked", Toast.LENGTH_SHORT).show();
-            }
+        //submit button
+        btn.setOnClickListener(view -> {
+            DocumentReference documentReference1 = fStore.collection("answers").document(val);
+
+            //check then count the numbers inside the database
+            documentReference1.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //scan all answers in database if matches with the answers given
+                        Map<String, Object> map = document.getData();
+                        DocumentReference documentReference = fStore.collection("answers").document(val);
+                        documentReference.addSnapshotListener(Quiz.this, (value, error) -> {
+                            for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
+                                EditText answers = findViewById(i);
+                                if (value != null) {
+                                    if (answers.getText().toString().equals(value.getString("ans"+i))){
+                                        Log.d("TAG", "onCreate: Correct");
+                                        score++;
+                                    }else{
+                                        Log.d("TAG", "onCreate: Mistake");
+                                    }
+                                }
+                            }
+                            Toast.makeText(Quiz.this, "Score: "+ score, Toast.LENGTH_LONG).show();
+                            score = 0;
+                        });
+                    }
+                }
+            });
         });
 
         this.addContentView(sv, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));

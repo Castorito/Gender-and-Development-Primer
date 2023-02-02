@@ -17,7 +17,7 @@
             android:id="@+id/student_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/teal_700"/>
+            android:background="#59595C"/>
 
         <FrameLayout
             android:id="@+id/fragment_container_student"

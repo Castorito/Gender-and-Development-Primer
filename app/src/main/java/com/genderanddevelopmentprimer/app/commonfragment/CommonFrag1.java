@@ -53,7 +53,8 @@ public class CommonFrag1 extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(new Intent(getActivity(), Quiz.class));
-                i.putExtra("Value", "cf1");
+                //identify the questions for contents of specific fragment
+                i.putExtra("identifier", "cf1");
                 startActivity(i);
             }
         });

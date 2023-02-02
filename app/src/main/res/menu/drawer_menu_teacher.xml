@@ -2,8 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
-    <group android:checkableBehavior="single">
         <item
             android:id="@+id/teacher_common_fragment_1"
             android:icon="@drawable/ic_content"
@@ -48,13 +46,4 @@
             android:id="@+id/teacher_fragment_8"
             android:icon="@drawable/ic_content"
             android:title="@string/gad_planning_and_budgeting" />
-    </group>
-    <item android:title="@string/others">
-        <menu>
-            <item
-                android:id="@+id/teacher_localhelpdesk"
-                android:icon="@drawable/ic_helpdesk"
-                android:title="@string/local_help_desk_information" />
-        </menu>
-    </item>
 </menu>
