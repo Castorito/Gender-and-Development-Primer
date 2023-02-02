@@ -1,5 +1,6 @@
 package com.genderanddevelopmentprimer.app.mainfunctions;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,13 +10,12 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -129,13 +129,7 @@ public class Login extends AppCompatActivity {
 
                         if (unverified == 3) {
                             unverified = 0;
-                            new AlertDialog.Builder(this)
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .setTitle("Email still not verified!")
-                                    .setMessage("Resend verification link?")
-                                    .setPositiveButton("Yes", (dialog, which) -> user.sendEmailVerification().addOnSuccessListener(unused -> Toast.makeText(Login.this, "Email verification link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show()))
-                                    .setNegativeButton("No", null)
-                                    .show();
+                            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Email still not verified!").setMessage("Resend verification link?").setPositiveButton("Yes", (dialog, which) -> user.sendEmailVerification().addOnSuccessListener(unused -> Toast.makeText(Login.this, "Email verification link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show())).setNegativeButton("No", null).show();
                         }
                     } else {
                         Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
@@ -154,32 +148,27 @@ public class Login extends AppCompatActivity {
         btnsignUp.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Register.class)));
 
         btnForgotPass.setOnClickListener(v -> {
-            EditText resetEmail = new EditText(v.getContext());
-            AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-            passwordResetDialog.setTitle("Reset Password?");
-            passwordResetDialog.setMessage("Enter registered email to receive reset link:");
+            Dialog forgotPass = new Dialog(Login.this);
+            forgotPass.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            forgotPass.setContentView(R.layout.forgot_password);
+            forgotPass.setCancelable(false);
 
-            //add padding to textbox in forgot pass
-            FrameLayout container = new FrameLayout(Login.this);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            EditText forgotPassEmail = forgotPass.findViewById(R.id.forgotPass_email);
+            Button btnCancel = forgotPass.findViewById(R.id.btn_cancelforgotPass);
+            Button btnSend = forgotPass.findViewById(R.id.btn_send);
 
-            params.leftMargin = 50;
-            params.rightMargin = 50;
+            btnCancel.setOnClickListener(v12 -> forgotPass.dismiss());
 
-            resetEmail.setLayoutParams(params);
-            container.addView(resetEmail);
-
-            passwordResetDialog.setView(resetEmail);
-            passwordResetDialog.setView(container);
-
-            passwordResetDialog.setPositiveButton("Yes", (dialog, which) -> {
+            btnSend.setOnClickListener(v1 -> {
                 //reset link
-                String email = resetEmail.getText().toString().trim();
-                fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
+                String email = forgotPassEmail.getText().toString().trim();
+                if (email.isEmpty()) {
+                    Toast.makeText(Login.this, "Email cannot be blank!", Toast.LENGTH_SHORT).show();
+                } else {
+                    fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
+                }
             });
-            passwordResetDialog.setNegativeButton("No", null);
-
-            passwordResetDialog.create().show();
+            forgotPass.show();
         });
     }
 
@@ -207,6 +196,6 @@ public class Login extends AppCompatActivity {
         }
         Toast.makeText(this, "Press again to confirm exit.", Toast.LENGTH_SHORT).show();
         isBackPressedOnce = true;
-        new Handler().postDelayed((Runnable) () -> isBackPressedOnce = false, 2000);
+        new Handler().postDelayed(() -> isBackPressedOnce = false, 2000);
     }
 }

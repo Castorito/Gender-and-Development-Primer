@@ -14,9 +14,10 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
     </style>
     <style name="ThemeOverlay.Design.TextInputEditText." parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:backgroundTint">@color/white</item>
     </style>
 </resources>
