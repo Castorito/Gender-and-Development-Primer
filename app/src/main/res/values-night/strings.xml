@@ -5,24 +5,17 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="about_us">About Us</string>
-    <string name="local_help_desk_information">Local Help Desk Information</string>
-    <string name="others">Others</string>
     <string name="legal_mandates_of_gad">Legal Mandates of GAD</string>
     <string name="various_forms_of_violence">Various forms of violence</string>
     <string name="gender_sensitivity_training_module">Gender Sensitivity Module</string>
     <string name="history_of_gender_and_development_in_cvsu_ccc">History of Gender and Development in CvCU-CCC</string>
     <string name="history_of_gender_and_development_resource_center">History of Gender and Development Resource Center</string>
     <string name="brief_history_of_gender_and_development_in_the_philippines">Brief History of Gender and Development in the Philippines</string>
-    <string name="log_out">Log out</string>
     <string name="gender_mainstreaming">Gender Mainstreaming</string>
     <string name="gender_analysis">Gender Analysis</string>
     <string name="gender_analysis_tools">Gender Analysis Tools</string>
     <string name="gender_mainstreaming_evaluation_framework">Gender Mainstreaming Evaluation Framework</string>
     <string name="gad_planning_and_budgeting">GAD Planning and Budgeting</string>
-    <string name="profile_picture">profile picture</string>
     <string-array name="userType">
         <item>Student</item>
         <item>Teacher</item>

@@ -11,8 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.genderanddevelopmentprimer.app.R;
-import com.genderanddevelopmentprimer.app.navbaractivity.StudentActivity;
-import com.genderanddevelopmentprimer.app.navbaractivity.TeacherActivity;
+import com.genderanddevelopmentprimer.app.navbaractivity.DrawerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,15 +45,7 @@ public class HomeScreen extends AppCompatActivity {
         btnLesson.setOnClickListener(v -> {
             userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
             DocumentReference documentReference = fStore.collection("users").document(userID);
-            documentReference.addSnapshotListener((value, error) -> {
-                if (value != null) {
-                    if (Objects.equals(value.getString("userType"), "Teacher")) {
-                        startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
-                    } else if (Objects.equals(value.getString("userType"), "Student")) {
-                        startActivity(new Intent(getApplicationContext(), StudentActivity.class));
-                    }
-                }
-            });
+            documentReference.addSnapshotListener((value, error) -> startActivity(new Intent(getApplicationContext(), DrawerActivity.class)));
         });
 
         btnHelp.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), LocalHelpDeskInfo.class)));
@@ -82,9 +73,7 @@ public class HomeScreen extends AppCompatActivity {
             case Configuration.UI_MODE_NIGHT_YES:
                 getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
                 break;
-
             case Configuration.UI_MODE_NIGHT_UNDEFINED:
-
             case Configuration.UI_MODE_NIGHT_NO:
                 getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
                 break;

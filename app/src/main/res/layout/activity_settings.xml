@@ -4,138 +4,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainfunctions.Settings"
-    android:theme="@style/ThemeOverlay.Design.TextInputEditText.">
+    android:theme="@style/ThemeOverlay.Design.TextInputEditText."
+    tools:context=".mainfunctions.Settings">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:padding="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="First Name:" />
 
             <EditText
                 android:id="@+id/fName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableEnd="@drawable/ic_edit"
                 android:enabled="false"
                 android:inputType="textPersonName"
+                android:minWidth="488dp"
                 android:text="First Name"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="Last Name:" />
 
             <EditText
                 android:id="@+id/lName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableEnd="@drawable/ic_edit"
                 android:enabled="false"
                 android:inputType="textPersonName"
+                android:minWidth="488dp"
+                android:minHeight="48dp"
                 android:text="Last Name"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="Sex:" />
 
             <TextView
                 android:id="@+id/sex"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:inputType="text"
+                android:minWidth="488dp"
                 android:text="Sex"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="Email:" />
 
             <EditText
                 android:id="@+id/email"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableEnd="@drawable/ic_edit"
                 android:enabled="false"
                 android:inputType="textEmailAddress"
+                android:minWidth="488dp"
+                android:minHeight="48dp"
                 android:text="Email"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="Municipality:" />
 
             <EditText
                 android:id="@+id/municipality"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableEnd="@drawable/ic_edit"
                 android:enabled="false"
                 android:inputType="text"
+                android:minWidth="488dp"
+                android:minHeight="48dp"
                 android:text="Municipality"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="Province:" />
 
             <EditText
                 android:id="@+id/province"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableEnd="@drawable/ic_edit"
                 android:enabled="false"
                 android:inputType="text"
+                android:minWidth="488dp"
                 android:text="Province"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:text="User Type:" />
 
             <TextView
                 android:id="@+id/userType"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:minWidth="488dp"
                 android:text="User Type"
                 android:textSize="20sp" />
 
             <Button
                 android:id="@+id/btn_editProfile"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:text="Edit Profile" />
 
             <Button
                 android:id="@+id/btn_changePass"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="Change Password" />
         </LinearLayout>
     </ScrollView>

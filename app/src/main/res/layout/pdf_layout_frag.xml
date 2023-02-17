@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/commonfrag3"
+        android:id="@+id/pdfFrag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"/>
@@ -18,4 +19,5 @@
         android:drawableEnd="@drawable/ic_book"
         android:visibility="gone"
         android:text="Take quiz" />
+
 </RelativeLayout>

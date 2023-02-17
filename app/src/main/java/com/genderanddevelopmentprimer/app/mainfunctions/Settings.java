@@ -57,14 +57,15 @@ public class Settings extends AppCompatActivity {
 
         DocumentReference documentReference = fStore.collection("users").document(user.getUid());
         documentReference.addSnapshotListener(this, (value, error) -> {
-            assert value != null;
-            fName.setText(value.getString("firstName"));
-            lName.setText(value.getString("lastName"));
-            sex.setText(value.getString("sex"));
-            email.setText(value.getString("email"));
-            municipality.setText(value.getString("municipality"));
-            province.setText(value.getString("province"));
-            usertype.setText(value.getString("userType"));
+            if (value != null) {
+                fName.setText(value.getString("firstName"));
+                lName.setText(value.getString("lastName"));
+                sex.setText(value.getString("sex"));
+                email.setText(value.getString("email"));
+                municipality.setText(value.getString("municipality"));
+                province.setText(value.getString("province"));
+                usertype.setText(value.getString("userType"));
+            }
         });
 
         btnChangePass.setOnClickListener(v -> showCustomChangePass());
@@ -81,34 +82,35 @@ public class Settings extends AppCompatActivity {
             } else if (btneditProfile.getText().equals("Save")) {
                 DocumentReference check = fStore.collection("users").document(user.getUid());
                 check.addSnapshotListener((value, error) -> {
-                    assert value != null;
-                    if (fName.getText().toString().equals(value.getString("firstName"))
-                            && lName.getText().toString().equals(value.getString("lastName"))
-                            && email.getText().toString().equals(value.getString("email"))
-                            && municipality.getText().toString().equals(value.getString("municipality"))
-                            && province.getText().toString().equals(value.getString("province"))) {
-                        fName.setEnabled(false);
-                        lName.setEnabled(false);
-                        email.setEnabled(false);
-                        municipality.setEnabled(false);
-                        province.setEnabled(false);
-                        btneditProfile.setText("Edit Profile");
-                    } else {
-                        String varEmail = email.getText().toString();
+                    if (value != null) {
+                        if (fName.getText().toString().equals(value.getString("firstName"))
+                                && lName.getText().toString().equals(value.getString("lastName"))
+                                && email.getText().toString().equals(value.getString("email"))
+                                && municipality.getText().toString().equals(value.getString("municipality"))
+                                && province.getText().toString().equals(value.getString("province"))) {
+                            fName.setEnabled(false);
+                            lName.setEnabled(false);
+                            email.setEnabled(false);
+                            municipality.setEnabled(false);
+                            province.setEnabled(false);
+                            btneditProfile.setText("Edit Profile");
+                        } else {
+                            String varEmail = email.getText().toString();
 
-                        user.updateEmail(varEmail).addOnSuccessListener(unused -> {
-                            DocumentReference documentRef = fStore.collection("users").document(user.getUid());
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("firstName", fName.getText().toString());
-                            user.put("lastName", lName.getText().toString());
-                            user.put("municipality", municipality.getText().toString());
-                            user.put("province", province.getText().toString());
-                            user.put("email", varEmail);
-                            documentRef.update(user).addOnSuccessListener(unused1 -> {
-                                Toast.makeText(Settings.this, "Update Successful!", Toast.LENGTH_SHORT).show();
-                                finish();
-                            });
-                        }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                            user.updateEmail(varEmail).addOnSuccessListener(unused -> {
+                                DocumentReference documentRef = fStore.collection("users").document(user.getUid());
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("firstName", fName.getText().toString());
+                                user.put("lastName", lName.getText().toString());
+                                user.put("municipality", municipality.getText().toString());
+                                user.put("province", province.getText().toString());
+                                user.put("email", varEmail);
+                                documentRef.update(user).addOnSuccessListener(unused1 -> {
+                                    Toast.makeText(Settings.this, "Update Successful!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                });
+                            }).addOnFailureListener(e -> Toast.makeText(Settings.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                        }
                     }
                 });
             }

@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#59595C"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:theme="@style/toolbarStyle">
 
     <ImageView
         android:layout_width="100dp"
@@ -14,5 +14,5 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_female"/>
+        android:src="@drawable/ic_female" />
 </LinearLayout>

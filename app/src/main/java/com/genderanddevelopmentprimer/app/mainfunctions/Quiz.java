@@ -40,8 +40,6 @@ public class Quiz extends AppCompatActivity {
 
         setBackground();
 
-
-
         fStore = FirebaseFirestore.getInstance();
 
         //identify which fragment a button is clicked
@@ -60,7 +58,7 @@ public class Quiz extends AppCompatActivity {
 
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(40, 20, 40, 50);
+        linearLayout.setPadding(50, 50, 50, 50);
 
         DocumentReference docRef = fStore.collection("questions").document(val);
         docRef.get().addOnCompleteListener(task -> {
@@ -80,7 +78,7 @@ public class Quiz extends AppCompatActivity {
 
                             ans = new EditText(Quiz.this);
                             ans.setId(i);
-                            ans.setHint("Answer");
+                            ans.setHint("answer");
                             ans.setInputType(InputType.TYPE_CLASS_TEXT);
                             ans.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -111,18 +109,19 @@ public class Quiz extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        //scan all answers in database if matches with the answers given
+                        //scan all answers in database if matches with the answers given or not
                         Map<String, Object> map = document.getData();
                         DocumentReference documentReference = fStore.collection("answers").document(val);
                         documentReference.addSnapshotListener(Quiz.this, (value, error) -> {
                             for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
+
                                 EditText answers = findViewById(i);
 
                                 if (answers.getText().toString().equals(Objects.requireNonNull(value).getString("ans" + i))) {
                                     score++;
-                                    answerList.add(String.format("%d. %s ⁄", i, answers.getText().toString()));
+                                    answerList.add(String.format("%d. %s  ⁄", i, answers.getText().toString()));
                                 }else{
-                                    answerList.add(String.format("%d. %s ×", i, answers.getText().toString()));
+                                    answerList.add(String.format("%d. %s  ×", i, answers.getText().toString()));
                                 }
                             }
                             AlertDialog.Builder showScore = new AlertDialog.Builder(this);
@@ -133,7 +132,7 @@ public class Quiz extends AppCompatActivity {
                             AlertDialog show = showScore.create();
                             show.show();
 
-                            show.getButton(AlertDialog.BUTTON_NEGATIVE).setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                            show.getButton(AlertDialog.BUTTON_NEGATIVE).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
 
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT); //create a new one
                             layoutParams.gravity = Gravity.END; //this is layout_gravity

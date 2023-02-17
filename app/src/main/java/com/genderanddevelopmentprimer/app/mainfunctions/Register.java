@@ -87,12 +87,12 @@ public class Register extends AppCompatActivity {
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                //nothing to do
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                //nothing to do
             }
 
             @Override
@@ -110,12 +110,12 @@ public class Register extends AppCompatActivity {
         retypePass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                //nothing to do
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                //nothing to do
             }
 
             @Override
@@ -133,9 +133,16 @@ public class Register extends AppCompatActivity {
 
         //register button
         btnregister.setOnClickListener(v -> {
-
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+
+            firstName.clearFocus();
+            lastName.clearFocus();
+            municipality.clearFocus();
+            province.clearFocus();
+            emailAddress.clearFocus();
+            password.clearFocus();
+            retypePass.clearFocus();
 
             String varFName = firstName.getText().toString().trim();
             String varLName = lastName.getText().toString().trim();
@@ -150,67 +157,72 @@ public class Register extends AppCompatActivity {
             if (TextUtils.isEmpty(varFName)) {
                 firstName.setError("Enter your first name.");
             }
+
             if (TextUtils.isEmpty(varLName)) {
                 lastName.setError("Enter your last name.");
             }
+
             if (TextUtils.isEmpty(varMunicipality)) {
                 municipality.setError("Enter your municipality.");
             }
+
             if (TextUtils.isEmpty(varProvince)) {
                 province.setError("Enter your province.");
             }
+
             if (TextUtils.isEmpty(varEmailAdd)) {
                 emailAddress.setError("Enter an email address.");
             }
+
             if (TextUtils.isEmpty(varPassword)) {
                 password.setError("Enter a password.");
             }
+
             if (TextUtils.isEmpty(varRetypePass)) {
                 retypePass.setError("Retype your password.");
-                return;
             } else if (!varPassword.equals(varRetypePass)) {
                 retypePass.setError("Password not the same!");
-                return;
-            }
+            }else {
 
-            loading.setVisibility(View.VISIBLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                loading.setVisibility(View.VISIBLE);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-            fAuth.createUserWithEmailAndPassword(varEmailAdd, varPassword).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
+                fAuth.createUserWithEmailAndPassword(varEmailAdd, varPassword).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 
-                    //insert user to database
-                    userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-                    DocumentReference documentReference = fStore.collection("users").document(userID);
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("firstName", varFName);
-                    user.put("lastName", varLName);
-                    user.put("userType", varUserType);
-                    user.put("sex", varSex);
-                    user.put("municipality", varMunicipality);
-                    user.put("province", varProvince);
-                    user.put("email", varEmailAdd);
-                    documentReference.set(user).addOnSuccessListener(unused -> {
+                        //insert user to database
+                        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
+                        DocumentReference documentReference = fStore.collection("users").document(userID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("firstName", varFName);
+                        user.put("lastName", varLName);
+                        user.put("userType", varUserType);
+                        user.put("sex", varSex);
+                        user.put("municipality", varMunicipality);
+                        user.put("province", varProvince);
+                        user.put("email", varEmailAdd);
+                        documentReference.set(user).addOnSuccessListener(unused -> {
 
-                        Toast.makeText(Register.this, "User Created!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "User Created!", Toast.LENGTH_SHORT).show();
 
-                        //verify email
-                        FirebaseUser verifyUser = fAuth.getCurrentUser();
-                        Objects.requireNonNull(verifyUser).sendEmailVerification().addOnSuccessListener(unused1 -> {
-                            Toast.makeText(Register.this, "Verification email sent!", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(Register.this, "Verify email first before logging in!", Toast.LENGTH_SHORT).show();
+                            //verify email
+                            FirebaseUser verifyUser = fAuth.getCurrentUser();
+                            Objects.requireNonNull(verifyUser).sendEmailVerification().addOnSuccessListener(unused1 -> {
+                                Toast.makeText(Register.this, "Verification email sent!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Verify email first before logging in!", Toast.LENGTH_SHORT).show();
+                            }).addOnFailureListener(e -> Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+
+                            startActivity(new Intent(getApplicationContext(), Login.class));
+                            finish();
+
                         }).addOnFailureListener(e -> Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-
-                        startActivity(new Intent(getApplicationContext(), Login.class));
-                        finish();
-
-                    }).addOnFailureListener(e -> Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                } else {
-                    Toast.makeText(Register.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                    loading.setVisibility(View.INVISIBLE);
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                }
-            });
+                    } else {
+                        Toast.makeText(Register.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.INVISIBLE);
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
+                });
+            }
         });
 
         btnsignIn.setOnClickListener(v -> {
@@ -228,7 +240,6 @@ public class Register extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_UNDEFINED:
-
             case Configuration.UI_MODE_NIGHT_NO:
                 getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
                 break;

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -36,13 +38,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".navbaractivity.TeacherActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".mainfunctions.Register"
             android:exported="false">
             <meta-data
@@ -52,10 +47,9 @@
         <activity
             android:name=".mainfunctions.Login"
             android:exported="true"
-            android:launchMode="singleInstancePerTask">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -64,7 +58,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".navbaractivity.StudentActivity"
+            android:name=".navbaractivity.DrawerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainfunctions.Login"
-    android:theme="@style/ThemeOverlay.Design.TextInputEditText.">
+    android:theme="@style/ThemeOverlay.Design.TextInputEditText."
+    tools:context=".mainfunctions.Login">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -42,40 +42,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
+                    android:fontFamily="serif-monospace"
                     android:text="@string/app_name"
                     android:textAlignment="textStart"
                     android:textSize="21sp"
-                    android:textStyle="bold"
-                    android:fontFamily="serif-monospace"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/login_emailAddress"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="emailAddress"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/login_password"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
             <CheckBox
                 android:id="@+id/showPass"
                 android:layout_width="wrap_content"
+                android:minWidth="320dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:text="Show Password" />
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="@string/login" />
 
@@ -91,7 +93,7 @@
 
             <TextView
                 android:id="@+id/btn_forgotPass"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/forgot_password"
                 android:textAlignment="center"

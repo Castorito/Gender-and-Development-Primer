@@ -51,7 +51,6 @@ public class Login extends AppCompatActivity {
 
         setBackground();
 
-
         loginEmail = findViewById(R.id.login_emailAddress);
         loginPass = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.btn_login);
@@ -70,9 +69,8 @@ public class Login extends AppCompatActivity {
 
         //account logged in
         if (fAuth.getCurrentUser() != null) {
-            FirebaseUser newuser = fAuth.getCurrentUser();
-
-            if (newuser.isEmailVerified()) {
+            FirebaseUser newUser = fAuth.getCurrentUser();
+            if (newUser.isEmailVerified()) {
                 startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                 finish();
             }
@@ -91,6 +89,9 @@ public class Login extends AppCompatActivity {
             //hide keyboard
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+
+            loginEmail.clearFocus();
+            loginPass.clearFocus();
 
             unverified++;
 
@@ -165,7 +166,10 @@ public class Login extends AppCompatActivity {
                 if (email.isEmpty()) {
                     Toast.makeText(Login.this, "Email cannot be blank!", Toast.LENGTH_SHORT).show();
                 } else {
-                    fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
+                    fAuth.sendPasswordResetEmail(email).addOnSuccessListener(unused -> {
+                        Toast.makeText(Login.this, "Reset link sent!", Toast.LENGTH_SHORT).show();
+                        forgotPass.dismiss();
+                    }).addOnFailureListener(e -> Toast.makeText(Login.this, "Error! Reset link not sent. " + Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show());
                 }
             });
             forgotPass.show();
