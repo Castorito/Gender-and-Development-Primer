@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Gender and Development Primer</string>
-    <string name="sign_up_instead">sign up instead?</string>
-    <string name="forgot_password">forgot password?</string>
+    <string name="sign_up_instead"><u>Sign Up Instead?</u></string>
+    <string name="forgot_password"><u>Forgot Password?</u></string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="legal_mandates_of_gad">Legal Mandates of GAD</string>
     <string name="various_forms_of_violence">Various forms of violence</string>
-    <string name="gender_sensitivity_training_module">Gender Sensitivity Module</string>
+    <string name="gender_sensitivity_training_module">Gender Sensitivity Training Module</string>
     <string name="history_of_gender_and_development_in_cvsu_ccc">History of Gender and Development in CvCU-CCC</string>
     <string name="history_of_gender_and_development_resource_center">History of Gender and Development Resource Center</string>
     <string name="brief_history_of_gender_and_development_in_the_philippines">Brief History of Gender and Development in the Philippines</string>

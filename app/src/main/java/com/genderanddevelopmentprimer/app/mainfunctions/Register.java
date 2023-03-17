@@ -182,7 +182,7 @@ public class Register extends AppCompatActivity {
                 retypePass.setError("Retype your password.");
             } else if (!varPassword.equals(varRetypePass)) {
                 retypePass.setError("Password not the same!");
-            }else {
+            } else {
 
                 loading.setVisibility(View.VISIBLE);
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -217,7 +217,7 @@ public class Register extends AppCompatActivity {
 
                         }).addOnFailureListener(e -> Toast.makeText(Register.this, e.getMessage(), Toast.LENGTH_SHORT).show());
                     } else {
-                        Toast.makeText(Register.this, "Error " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "Error: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         loading.setVisibility(View.INVISIBLE);
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     }

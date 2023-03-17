@@ -49,7 +49,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     DrawerLayout drawerLayout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userID, filePath, fileName, downloadUrl;
+    String filePath, fileName, downloadUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,32 +73,35 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         actionBarDrawerToggle.syncState();
 
-        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-        DocumentReference documentReference = fStore.collection("users").document(userID);
-        documentReference.addSnapshotListener((value, error) -> {
-            if (value != null) {
-                if (Objects.equals(value.getString("userType"), "Teacher")) {
-                    navigationView.inflateMenu(R.menu.drawer_menu_teacher);
+        if (fAuth.getCurrentUser() != null) {
+            DocumentReference documentReference = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+            documentReference.addSnapshotListener((value, error) -> {
+                if (value != null) {
+                    if (Objects.equals(value.getString("userType"), "Teacher")) {
+                        navigationView.inflateMenu(R.menu.drawer_menu_teacher);
 
-                    if (savedInstanceState == null) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new CommonFrag1()).commit();
-                        filePath = "/Common PDF Files/Common Fragment1.pdf";
-                        fileName = "Common Fragment 1.pdf";
-                        navigationView.setCheckedItem(R.id.teacher_common_fragment_1);
-                    }
+                        if (savedInstanceState == null) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new CommonFrag1()).commit();
+                            filePath = "/Common PDF Files/Common Fragment1.pdf";
+                            fileName = "Common Fragment 1.pdf";
+                            navigationView.setCheckedItem(R.id.teacher_common_fragment_1);
+                        }
 
-                } else if (Objects.equals(value.getString("userType"), "Student")) {
-                    navigationView.inflateMenu(R.menu.drawer_menu_student);
+                    } else if (Objects.equals(value.getString("userType"), "Student")) {
+                        navigationView.inflateMenu(R.menu.drawer_menu_student);
 
-                    if (savedInstanceState == null) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new CommonFrag1()).commit();
-                        filePath = "/Common PDF Files/Common Fragment1.pdf";
-                        fileName = "Common Fragment 1.pdf";
-                        navigationView.setCheckedItem(R.id.student_common_fragment_1);
+                        if (savedInstanceState == null) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new CommonFrag1()).commit();
+                            filePath = "/Common PDF Files/Common Fragment1.pdf";
+                            fileName = "Common Fragment 1.pdf";
+                            navigationView.setCheckedItem(R.id.student_common_fragment_1);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }else{
+            finish();
+        }
     }
 
     @Override

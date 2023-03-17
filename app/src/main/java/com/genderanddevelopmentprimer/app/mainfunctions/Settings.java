@@ -55,18 +55,20 @@ public class Settings extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         user = fAuth.getCurrentUser();
 
-        DocumentReference documentReference = fStore.collection("users").document(user.getUid());
-        documentReference.addSnapshotListener(this, (value, error) -> {
-            if (value != null) {
-                fName.setText(value.getString("firstName"));
-                lName.setText(value.getString("lastName"));
-                sex.setText(value.getString("sex"));
-                email.setText(value.getString("email"));
-                municipality.setText(value.getString("municipality"));
-                province.setText(value.getString("province"));
-                usertype.setText(value.getString("userType"));
-            }
-        });
+        if (user != null){
+            DocumentReference documentReference = fStore.collection("users").document(user.getUid());
+            documentReference.addSnapshotListener(this, (value, error) -> {
+                if (value != null) {
+                    fName.setText(value.getString("firstName"));
+                    lName.setText(value.getString("lastName"));
+                    sex.setText(value.getString("sex"));
+                    email.setText(value.getString("email"));
+                    municipality.setText(value.getString("municipality"));
+                    province.setText(value.getString("province"));
+                    usertype.setText(value.getString("userType"));
+                }
+            });
+        }
 
         btnChangePass.setOnClickListener(v -> showCustomChangePass());
 

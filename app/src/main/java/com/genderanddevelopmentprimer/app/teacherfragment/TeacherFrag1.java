@@ -1,5 +1,7 @@
 package com.genderanddevelopmentprimer.app.teacherfragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -7,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import com.genderanddevelopmentprimer.app.R;
 import com.genderanddevelopmentprimer.app.mainfunctions.Quiz;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -43,7 +48,17 @@ public class TeacherFrag1 extends Fragment {
 
         isConnected();
 
-        new RetrievePDFfromUrl().execute(pdfFile);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("/Teacher PDF Files/Teacher Fragment1.pdf");
+
+        storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            // Handle successful download URL generation
+            String downloadUrl = uri.toString();
+            new RetrievePDFfromUrl().execute(downloadUrl);
+        }).addOnFailureListener(exception -> {
+            // Handle any errors
+            Log.e(TAG, "Error getting download URL: " + exception.getMessage());
+        });
 
         quizBtn.setOnClickListener(view -> {
             Intent i = new Intent(new Intent(getActivity(), Quiz.class));

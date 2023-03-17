@@ -69,8 +69,8 @@ public class Login extends AppCompatActivity {
 
         //account logged in
         if (fAuth.getCurrentUser() != null) {
-            FirebaseUser newUser = fAuth.getCurrentUser();
-            if (newUser.isEmailVerified()) {
+            FirebaseUser getUser = fAuth.getCurrentUser();
+            if (getUser.isEmailVerified()) {
                 startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                 finish();
             }
