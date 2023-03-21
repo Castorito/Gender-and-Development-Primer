@@ -103,9 +103,9 @@ public class Quiz extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-            DocumentReference documentReference1 = fStore.collection("answers").document(val);
+            DocumentReference verifyAns = fStore.collection("answers").document(val);
             //check then count the numbers inside the database
-            documentReference1.get().addOnCompleteListener(task -> {
+            verifyAns.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
