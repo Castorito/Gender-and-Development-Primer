@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/ThemeOverlay.Design.TextInputEditText."
+    style="@style/ThemeOverlay.Design.TextInputEditText."
     tools:context=".mainfunctions.Register">
 
     <ScrollView
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Already have an account? Login instead."
+                android:text="@string/already_have_an_account_login_instead"
                 android:textAlignment="center" />
         </LinearLayout>
     </ScrollView>

@@ -2,27 +2,27 @@
     <!-- Base application theme. -->
     <style name="Theme.GenderAndDevelopmentPrimer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#DCA1B0</item>
+        <item name="colorPrimaryVariant">#DCA1B0</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#00000000</item>
+        <item name="android:statusBarColor">#303030</item>
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textFontWeight">500</item>
     </style>
     <style name="ThemeOverlay.Design.TextInputEditText." parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:textFontWeight">600</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:backgroundTint">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:background">#303030</item>
     </style>
     <style name="toolbarStyle" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">#59595C</item>
+        <item name="android:background">#DCA1B0</item>
     </style>
 </resources>

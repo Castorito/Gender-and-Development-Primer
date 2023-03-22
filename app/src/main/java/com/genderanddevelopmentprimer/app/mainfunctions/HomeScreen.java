@@ -52,7 +52,7 @@ public class HomeScreen extends AppCompatActivity {
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeScreen.this, "Wala pa! HAHAAHAHAHA", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeScreen.this, "TEST CLICK! WORKING", Toast.LENGTH_SHORT).show();
             }
         });
 

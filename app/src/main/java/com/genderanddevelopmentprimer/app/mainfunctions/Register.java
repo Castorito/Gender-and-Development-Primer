@@ -94,7 +94,7 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (password.length() < 8) {
+                if (!password.getText().toString().equals("") && password.length() <8) {
                     password.setError("Password must be 8 characters or longer!");
                 } else if (!password.getText().toString().equals(retypePass.getText().toString())) {
                     retypePass.setError("Password not the same!");

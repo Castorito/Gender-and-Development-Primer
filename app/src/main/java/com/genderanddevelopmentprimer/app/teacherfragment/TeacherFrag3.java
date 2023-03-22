@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -113,18 +114,39 @@ public class TeacherFrag3 extends Fragment {
         protected void onPostExecute(InputStream inputStream) {
             // after the execution of our async
             // task we are loading our pdf in our pdf view.
-            pdfView.fromStream(inputStream)
-                    .onLoad(nbPages -> {
-                        lastPage = nbPages;
-                        Toast.makeText(pdfView.getContext(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
-                    })
-                    .onPageChange((page, pageCount) -> {
-                        if (page == lastPage - 1) {
-                            quizBtn.setVisibility(View.VISIBLE);
-                        } else {
-                            quizBtn.setVisibility(View.GONE);
-                        }
-                    }).spacing(2).load();
+            int nightModeFlags = getContext().getResources().getConfiguration().uiMode &
+                    Configuration.UI_MODE_NIGHT_MASK;
+            boolean isNightMode = nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+
+            if (isNightMode) {
+                // Code to execute when night mode is enabled
+                pdfView.fromStream(inputStream)
+                        .onLoad(nbPages -> {
+                            lastPage = nbPages;
+                            Toast.makeText(pdfView.getContext(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
+                        })
+                        .onPageChange((page, pageCount) -> {
+                            if (page == lastPage - 1) {
+                                quizBtn.setVisibility(View.VISIBLE);
+                            } else {
+                                quizBtn.setVisibility(View.GONE);
+                            }
+                        }).spacing(2).nightMode(true).load();
+            } else {
+                // Code to execute when night mode is not enabled
+                pdfView.fromStream(inputStream)
+                        .onLoad(nbPages -> {
+                            lastPage = nbPages;
+                            Toast.makeText(pdfView.getContext(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
+                        })
+                        .onPageChange((page, pageCount) -> {
+                            if (page == lastPage - 1) {
+                                quizBtn.setVisibility(View.VISIBLE);
+                            } else {
+                                quizBtn.setVisibility(View.GONE);
+                            }
+                        }).spacing(2).load();
+            }
         }
     }
 }

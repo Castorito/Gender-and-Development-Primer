@@ -7,12 +7,8 @@
     android:theme="@style/toolbarStyle">
 
     <ImageView
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/ic_male" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_female" />
+        android:layout_margin="8dp"
+        android:src="@drawable/logov2" />
 </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/ThemeOverlay.Design.TextInputEditText."
+    style="@style/ThemeOverlay.Design.TextInputEditText."
     tools:context=".mainfunctions.Login">
 
     <ScrollView
@@ -35,7 +35,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:contentDescription="logo"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/logov2" />
 
                 <TextView
                     android:layout_width="wrap_content"

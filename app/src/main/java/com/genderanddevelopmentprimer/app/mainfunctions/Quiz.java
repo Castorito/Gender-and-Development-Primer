@@ -110,8 +110,8 @@ public class Quiz extends AppCompatActivity {
                         Map<String, Object> map = document.getData();
                         DocumentReference documentReference = fStore.collection("answers").document(val);
                         documentReference.addSnapshotListener(Quiz.this, (value, error) -> {
-                            for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
 
+                            for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
                                 EditText answers = findViewById(i);
 
                                 if (answers.getText().toString().equals(Objects.requireNonNull(value).getString("ans" + i))) {
@@ -121,6 +121,7 @@ public class Quiz extends AppCompatActivity {
                                     answerList.add(String.format("%d. %s  ×", i, answers.getText().toString()));
                                 }
                             }
+
                             AlertDialog.Builder showScore = new AlertDialog.Builder(this);
                             showScore.setTitle(String.format("Your score is: %d", score));
                             showScore.setItems(answerList.toArray(new CharSequence[0]),null);

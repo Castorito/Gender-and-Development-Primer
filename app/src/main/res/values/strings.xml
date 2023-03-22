@@ -18,6 +18,7 @@
     <string name="gad_planning_and_budgeting">GAD Planning and Budgeting</string>
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
+    <string name="already_have_an_account_login_instead">Already have an account? <u>Login instead.</u></string>
     <string-array name="userType">
         <item>Student</item>
         <item>Teacher</item>
@@ -25,5 +26,7 @@
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
+        <item>Others</item>
+        <item>Prefer not to say</item>
     </string-array>
 </resources>
