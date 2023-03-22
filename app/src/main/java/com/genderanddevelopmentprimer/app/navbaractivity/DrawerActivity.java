@@ -130,38 +130,60 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
             //teacher fragments
             case R.id.teacher_fragment_1:
+                filePath = "/Teacher PDF Files/Teacher Fragment1.pdf";
+                fileName = "Teacher Fragment 1";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag1()).commit();
                 break;
             case R.id.teacher_fragment_2:
+                filePath = "/Teacher PDF Files/Teacher Fragment2.pdf";
+                fileName = "Teacher Fragment 2";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag2()).commit();
                 break;
             case R.id.teacher_fragment_3:
+                filePath = "/Teacher PDF Files/Teacher Fragment3.pdf";
+                fileName = "Teacher Fragment 3";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag3()).commit();
                 break;
             case R.id.teacher_fragment_4:
+                filePath = "/Teacher PDF Files/Teacher Fragment4.pdf";
+                fileName = "Teacher Fragment 4";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag4()).commit();
                 break;
             case R.id.teacher_fragment_5:
+                filePath = "/Teacher PDF Files/Teacher Fragment5.pdf";
+                fileName = "Teacher Fragment 5";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag5()).commit();
                 break;
             case R.id.teacher_fragment_6:
+                filePath = "/Teacher PDF Files/Teacher Fragment6.pdf";
+                fileName = "Teacher Fragment 6";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag6()).commit();
                 break;
             case R.id.teacher_fragment_7:
+                filePath = "/Teacher PDF Files/Teacher Fragment7.pdf";
+                fileName = "Teacher Fragment 7";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag7()).commit();
                 break;
             case R.id.teacher_fragment_8:
+                filePath = "/Teacher PDF Files/Teacher Fragment8.pdf";
+                fileName = "Teacher Fragment 8";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new TeacherFrag8()).commit();
                 break;
 
             //student fragments
             case R.id.student_fragment_1:
+                filePath = "/Student PDF Files/Student Fragment1.pdf";
+                fileName = "Student Fragment 1";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new StudentFrag1()).commit();
                 break;
             case R.id.student_fragment_2:
+                filePath = "/Student PDF Files/Student Fragment2.pdf";
+                fileName = "Student Fragment 2";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new StudentFrag2()).commit();
                 break;
             case R.id.student_fragment_3:
+                filePath = "/Student PDF Files/Student Fragment3.pdf";
+                fileName = "Student Fragment 3";
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_drawer, new StudentFrag3()).commit();
                 break;
         }

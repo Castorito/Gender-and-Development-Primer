@@ -3,7 +3,6 @@ package com.genderanddevelopmentprimer.app.mainfunctions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -48,8 +47,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        setBackground();
 
         loginEmail = findViewById(R.id.login_emailAddress);
         loginPass = findViewById(R.id.login_password);
@@ -174,22 +171,6 @@ public class Login extends AppCompatActivity {
             });
             forgotPass.show();
         });
-    }
-
-    private void setBackground() {
-        //set background
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
-
-            case Configuration.UI_MODE_NIGHT_UNDEFINED:
-
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
     }
 
     @Override

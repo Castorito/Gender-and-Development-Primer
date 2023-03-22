@@ -1,6 +1,5 @@
 package com.genderanddevelopmentprimer.app.mainfunctions;
 
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -33,8 +32,6 @@ public class LocalHelpDeskInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_help_desk_info);
-
-        setBackground();
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -81,21 +78,5 @@ public class LocalHelpDeskInfo extends AppCompatActivity {
         sv.addView(linearLayout);
 
         this.addContentView(sv, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-    }
-
-    private void setBackground() {
-        //set background
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
-
-            case Configuration.UI_MODE_NIGHT_UNDEFINED:
-
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
     }
 }

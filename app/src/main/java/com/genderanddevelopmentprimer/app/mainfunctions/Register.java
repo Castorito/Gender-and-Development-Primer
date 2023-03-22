@@ -2,7 +2,6 @@ package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -48,8 +47,6 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        setBackground();
 
         firstName = findViewById(R.id.fName);
         lastName = findViewById(R.id.lName);
@@ -229,20 +226,5 @@ public class Register extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         });
-    }
-
-    private void setBackground() {
-        //set background
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
-
-            case Configuration.UI_MODE_NIGHT_UNDEFINED:
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
     }
 }

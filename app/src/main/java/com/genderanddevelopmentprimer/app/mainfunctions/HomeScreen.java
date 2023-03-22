@@ -1,7 +1,6 @@
 package com.genderanddevelopmentprimer.app.mainfunctions;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +27,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
-        setBackground();
 
         btnLesson = findViewById(R.id.btn_lesson);
         btnSettings = findViewById(R.id.btn_settings);
@@ -64,20 +61,6 @@ public class HomeScreen extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         });
-    }
-
-    private void setBackground() {
-        //set background
-        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setBackgroundDrawableResource(R.drawable.darkbackground);
-                break;
-            case Configuration.UI_MODE_NIGHT_UNDEFINED:
-            case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().setBackgroundDrawableResource(R.drawable.lightbackground);
-                break;
-        }
     }
 
     @Override

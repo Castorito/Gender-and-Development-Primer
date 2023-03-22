@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="ThemeOverlay.Design.TextInputEditText." parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:textFontWeight">600</item>

@@ -38,8 +38,6 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        setBackground();
-
         btneditProfile = findViewById(R.id.btn_editProfile);
         btnChangePass = findViewById(R.id.btn_changePass);
 
@@ -55,7 +53,7 @@ public class Settings extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         user = fAuth.getCurrentUser();
 
-        if (user != null){
+        if (user != null) {
             DocumentReference documentReference = fStore.collection("users").document(user.getUid());
             documentReference.addSnapshotListener(this, (value, error) -> {
                 if (value != null) {
