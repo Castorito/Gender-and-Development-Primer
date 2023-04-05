@@ -16,8 +16,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/drawer_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:theme="@style/toolbarStyle" />
+            style="@style/toolbarStyle"
+            android:layout_height="?android:attr/actionBarSize"/>
 
         <FrameLayout
             android:id="@+id/fragment_drawer"

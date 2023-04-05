@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/ThemeOverlay.Design.TextInputEditText."
-    tools:context=".mainfunctions.Settings">
+    style="@style/SubTheme"
+    tools:context=".Settings">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -13,6 +13,7 @@
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

@@ -5,5 +5,5 @@
         android:id="@+id/downloadicon"
         android:icon="@drawable/ic_download"
         android:title="Download"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
 </menu>

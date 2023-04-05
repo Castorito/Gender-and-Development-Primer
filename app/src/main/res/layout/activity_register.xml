@@ -2,16 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SubTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/ThemeOverlay.Design.TextInputEditText."
-    tools:context=".mainfunctions.Register">
+    tools:context=".Register">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:padding="20dp"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,15 +20,13 @@
             android:id="@+id/register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:gravity="center"
-            android:orientation="vertical">
+            android:padding="22dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
                 android:text="@string/app_name"
                 android:textAlignment="center"
                 android:textSize="24sp"
@@ -44,103 +41,127 @@
 
             <EditText
                 android:id="@+id/fName"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minWidth="488dp"
+                android:minHeight="48dp"/>
 
             <EditText
                 android:id="@+id/lName"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Last Name"
                 android:inputType="textPersonName"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
-            <RelativeLayout
-                android:layout_width="300dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Role:" />
 
                 <Spinner
                     android:id="@+id/userType"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:entries="@array/userType"
+                    android:minWidth="488dp"
                     android:spinnerMode="dialog" />
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="300dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sex:" />
 
                 <Spinner
                     android:id="@+id/sex"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:entries="@array/sex"
+                    android:minWidth="488dp"
                     android:spinnerMode="dialog" />
-            </RelativeLayout>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/register_municipality"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:hint="Municipality"
                 android:inputType="text"
-                android:minHeight="48dp" />
+                android:minWidth="488dp"
+                android:minHeight="48dp"/>
 
             <EditText
                 android:id="@+id/register_province"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Province"
                 android:inputType="text"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/register_emailAddress"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/register_password"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/register_retypePass"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:hint="Retype Password"
                 android:inputType="textPassword"
+                android:minWidth="488dp"
                 android:minHeight="48dp" />
 
             <CheckBox
                 android:id="@+id/showPassReg"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="488dp"
                 android:text="Show Password" />
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:minWidth="320dp"
+                android:minHeight="48dp"
                 android:text="Register" />
 
             <TextView
@@ -165,8 +186,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

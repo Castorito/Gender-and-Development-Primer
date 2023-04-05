@@ -1,7 +1,8 @@
-package com.genderanddevelopmentprimer.app.teacherfragment;
+package com.genderanddevelopmentprimer.app;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -21,9 +22,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.genderanddevelopmentprimer.app.R;
-import com.genderanddevelopmentprimer.app.mainfunctions.Quiz;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,43 +33,57 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class TeacherFrag6 extends Fragment {
-    int lastPage;
+public class DisplayFragment extends Fragment {
+
     PDFView pdfView;
-    Button quizBtn;
-    String pdfFile;
-    @Nullable
+    @SuppressLint("StaticFieldLeak")
+    static Button quizBtn;
+    int lastPage;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.pdf_layout_frag, container, false);
-        pdfView = v.findViewById(R.id.pdfFrag);
-        quizBtn = v.findViewById(R.id.btn_quiz);
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        String identifier = requireArguments().getString("identifier");
+
+        View view = inflater.inflate(R.layout.pdf_layout_frag, container, false);
+        pdfView = view.findViewById(R.id.pdfFrag);
+        quizBtn = view.findViewById(R.id.btn_quiz);
 
         isConnected();
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("/Teacher PDF Files/Teacher Fragment6.pdf");
 
-        storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            // Handle successful download URL generation
-            String downloadUrl = uri.toString();
-            new RetrievePDFfromUrl().execute(downloadUrl);
-        }).addOnFailureListener(exception -> {
-            // Handle any errors
-            Log.e(TAG, "Error getting download URL: " + exception.getMessage());
+        DocumentReference documentReference = firestore.collection("links").document("paths");
+        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            String link = documentSnapshot.getString(identifier);
+            StorageReference storageRef = storage.getReference().child(Objects.requireNonNull(link));
+
+            storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                // Handle successful download URL generation
+                String downloadUrl = uri.toString();
+                new RetrievePDFfromUrl().execute(downloadUrl);
+            }).addOnFailureListener(exception -> {
+                // Handle any errors
+                Log.e(TAG, "Error getting download URL: " + exception.getMessage());
+            });
         });
 
-        quizBtn.setOnClickListener(view -> {
+        quizBtn.setOnClickListener(view1 -> {
             Intent i = new Intent(new Intent(getActivity(), Quiz.class));
             //identify the questions for contents of specific fragment
-            i.putExtra("identifier", "tf6");
+            i.putExtra("identifier", identifier);
             startActivity(i);
         });
-        return v;
+
+        return view;
     }
+
     private void isConnected() {
         ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -84,6 +99,7 @@ public class TeacherFrag6 extends Fragment {
     }
 
     class RetrievePDFfromUrl extends AsyncTask<String, Void, InputStream> {
+
         @Override
         protected InputStream doInBackground(String... strings) {
             // we are using inputstream
@@ -114,39 +130,20 @@ public class TeacherFrag6 extends Fragment {
         protected void onPostExecute(InputStream inputStream) {
             // after the execution of our async
             // task we are loading our pdf in our pdf view.
-            int nightModeFlags = getContext().getResources().getConfiguration().uiMode &
-                    Configuration.UI_MODE_NIGHT_MASK;
+            int nightModeFlags = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             boolean isNightMode = nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
 
-            if (isNightMode) {
-                // Code to execute when night mode is enabled
-                pdfView.fromStream(inputStream)
-                        .onLoad(nbPages -> {
-                            lastPage = nbPages;
-                            Toast.makeText(pdfView.getContext(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
-                        })
-                        .onPageChange((page, pageCount) -> {
-                            if (page == lastPage - 1) {
-                                quizBtn.setVisibility(View.VISIBLE);
-                            } else {
-                                quizBtn.setVisibility(View.GONE);
-                            }
-                        }).spacing(2).nightMode(true).load();
-            } else {
-                // Code to execute when night mode is not enabled
-                pdfView.fromStream(inputStream)
-                        .onLoad(nbPages -> {
-                            lastPage = nbPages;
-                            Toast.makeText(pdfView.getContext(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
-                        })
-                        .onPageChange((page, pageCount) -> {
-                            if (page == lastPage - 1) {
-                                quizBtn.setVisibility(View.VISIBLE);
-                            } else {
-                                quizBtn.setVisibility(View.GONE);
-                            }
-                        }).spacing(2).load();
-            }
+            pdfView.fromStream(inputStream).onLoad(nbPages -> {
+                lastPage = nbPages;
+                Toast.makeText(pdfView.getContext(), "Reach the final page to take the quiz", Toast.LENGTH_SHORT).show();
+            }).onPageChange((page, pageCount) -> {
+                if (page == lastPage - 1) {
+                    quizBtn.setVisibility(View.VISIBLE);
+                } else {
+                    quizBtn.setVisibility(View.INVISIBLE);
+                }
+            }).nightMode(isNightMode).spacing(2).load();
+
         }
     }
 }

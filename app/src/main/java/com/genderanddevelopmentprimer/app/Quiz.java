@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app.mainfunctions;
+package com.genderanddevelopmentprimer.app;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,7 +17,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.genderanddevelopmentprimer.app.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -75,7 +74,7 @@ public class Quiz extends AppCompatActivity {
 
                             ans = new EditText(Quiz.this);
                             ans.setId(i);
-                            ans.setHint("answer");
+                            ans.setHint("Answer");
                             ans.setInputType(InputType.TYPE_CLASS_TEXT);
                             ans.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 

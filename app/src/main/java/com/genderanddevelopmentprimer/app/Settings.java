@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app.mainfunctions;
+package com.genderanddevelopmentprimer.app;
 
 import android.app.Dialog;
 import android.content.res.Configuration;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.genderanddevelopmentprimer.app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;

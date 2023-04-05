@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app.mainfunctions;
+package com.genderanddevelopmentprimer.app;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.genderanddevelopmentprimer.app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +46,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
 
         firstName = findViewById(R.id.fName);
         lastName = findViewById(R.id.lName);

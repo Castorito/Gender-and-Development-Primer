@@ -1,4 +1,4 @@
-package com.genderanddevelopmentprimer.app.mainfunctions;
+package com.genderanddevelopmentprimer.app;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,7 +23,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.genderanddevelopmentprimer.app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -72,13 +71,16 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         }
+
         //show password
         showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int cursorPosition = loginPass.getSelectionStart(); // save cursor position
             if (isChecked) {
                 loginPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             } else {
                 loginPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
+            loginPass.setSelection(cursorPosition); // restore cursor position
         });
 
         //Login Button
@@ -131,8 +133,8 @@ public class Login extends AppCompatActivity {
                         }
                     } else {
                         Toast.makeText(Login.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                         finish();
+                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                     }
 
                 } else {

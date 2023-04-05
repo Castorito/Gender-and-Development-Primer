@@ -2,12 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SubTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainfunctions.HomeScreen"
-    style="@style/ThemeOverlay.Design.TextInputEditText.">
+    tools:context=".HomeScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/drawer_toolbar_home"
+        style="@style/toolbarStyleHome"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +39,7 @@
                 android:layout_height="180dp"
                 android:layout_marginBottom="30dp"
                 android:contentDescription="logo"
-                android:src="@drawable/logov2" />
+                android:src="@drawable/logo" />
 
             <Button
                 android:id="@+id/btn_lesson"
@@ -36,32 +49,25 @@
                 android:text="Lesson" />
 
             <Button
+                android:id="@+id/btn_games"
+                android:layout_width="250dp"
+                android:layout_height="55dp"
+                android:layout_margin="5dp"
+                android:text="Games" />
+
+            <Button
                 android:id="@+id/btn_helpdesk"
                 android:layout_width="250dp"
                 android:layout_height="55dp"
                 android:layout_margin="5dp"
-                android:text="Local Help Desk Information"/>
+                android:text="Local Help Desk Information" />
 
-            <Button
-                android:id="@+id/btn_settings"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:layout_margin="5dp"
-                android:text="Settings" />
 
             <Button
                 android:id="@+id/btn_aboutUs"
                 android:layout_width="250dp"
                 android:layout_height="55dp"
-                android:layout_margin="5dp"
                 android:text="About Us" />
-
-            <Button
-                android:id="@+id/btn_logout"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="50dp"
-                android:text="Log out" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

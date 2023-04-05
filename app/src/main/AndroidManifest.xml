@@ -5,8 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,38 +18,46 @@
         android:theme="@style/Theme.GenderAndDevelopmentPrimer"
         tools:targetApi="31">
         <activity
-            android:name=".mainfunctions.LocalHelpDeskInfo"
+            android:name=".AboutUs"
             android:exported="false" />
         <activity
-            android:name=".mainfunctions.Quiz"
+            android:name=".WordGame"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".mainfunctions.Settings"
+            android:name=".LocalHelpDeskInfo"
+            android:exported="false" />
+        <activity
+            android:name=".Quiz"
+            android:exported="false" />
+        <activity
+            android:name=".Settings"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".mainfunctions.HomeScreen"
+            android:name=".HomeScreen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".mainfunctions.Register"
+            android:name=".Register"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".mainfunctions.Login"
+            android:name=".Login"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -59,11 +66,12 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".navbaractivity.DrawerActivity"
+            android:name=".DrawerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
     </application>
+
 </manifest>

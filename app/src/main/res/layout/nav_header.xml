@@ -3,12 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal"
     android:theme="@style/toolbarStyle">
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="8dp"
-        android:src="@drawable/logov2" />
+        android:src="@drawable/gad_rc" />
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/cvsu" />
 </LinearLayout>

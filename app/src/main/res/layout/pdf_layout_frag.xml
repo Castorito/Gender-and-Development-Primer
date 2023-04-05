@@ -7,16 +7,17 @@
         android:id="@+id/pdfFrag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"/>
+        android:layout_centerInParent="true" />
+
     <Button
         android:id="@+id/btn_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="10dp"
-        android:drawableEnd="@drawable/ic_book"
-        android:visibility="gone"
-        android:text="Take quiz" />
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:drawableEnd="@drawable/ic_content"
+        android:text="Take Assessment"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -1,16 +1,16 @@
-package com.genderanddevelopmentprimer.app.mainfunctions;
+package com.genderanddevelopmentprimer.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import com.genderanddevelopmentprimer.app.R;
-import com.genderanddevelopmentprimer.app.navbaractivity.DrawerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,16 +21,19 @@ public class HomeScreen extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button btnLesson, btnSettings, btnLogout, btnHelp, btnAboutUs;
+    Button btnLesson, btnHelp, btnAboutUs, btnGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        Toolbar drawerToolbar = findViewById(R.id.drawer_toolbar_home);
+        setSupportActionBar(drawerToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
         btnLesson = findViewById(R.id.btn_lesson);
-        btnSettings = findViewById(R.id.btn_settings);
-        btnLogout = findViewById(R.id.btn_logout);
+        btnGames = findViewById(R.id.btn_games);
         btnHelp = findViewById(R.id.btn_helpdesk);
         btnAboutUs = findViewById(R.id.btn_aboutUs);
 
@@ -45,22 +48,11 @@ public class HomeScreen extends AppCompatActivity {
             documentReference.addSnapshotListener((value, error) -> startActivity(new Intent(getApplicationContext(), DrawerActivity.class)));
         });
 
+        btnGames.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), WordGame.class)));
+
         btnHelp.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), LocalHelpDeskInfo.class)));
 
-        btnSettings.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Settings.class)));
-
-        btnAboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(HomeScreen.this, "TEST CLICK! WORKING", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnLogout.setOnClickListener(v -> {
-            fAuth.signOut();
-            startActivity(new Intent(getApplicationContext(), Login.class));
-            finish();
-        });
+        btnAboutUs.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AboutUs.class)));
     }
 
     @Override
@@ -71,5 +63,23 @@ public class HomeScreen extends AppCompatActivity {
                 .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", (dialog, which) -> finish())
                 .setNegativeButton("No", null).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logout) {
+            fAuth.signOut();
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            finishAffinity();
+        } else if (item.getItemId() == R.id.acc_sett) {
+            startActivity(new Intent(getApplicationContext(), Settings.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

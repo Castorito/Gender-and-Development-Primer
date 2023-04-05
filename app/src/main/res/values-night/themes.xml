@@ -17,12 +17,18 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textFontWeight">500</item>
     </style>
-    <style name="ThemeOverlay.Design.TextInputEditText." parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    <style name="SubTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:background">#303030</item>
     </style>
+
     <style name="toolbarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">#DCA1B0</item>
+    </style>
+
+    <style name="toolbarStyleHome" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">#303030</item>
     </style>
 </resources>
