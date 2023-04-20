@@ -1,6 +1,9 @@
 package com.genderanddevelopmentprimer.app;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -10,156 +13,131 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Objects;
+import java.util.Map;
 
 public class LocalHelpDeskInfo extends AppCompatActivity {
-
-    FirebaseFirestore fStore;
-    FirebaseAuth fAuth;
-
-    String municipality, province;
-
+    LinearLayout linearLayout;
+    LinearLayout.LayoutParams paramsLabel, paramsInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_help_desk_info);
 
-        fStore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
-
-        LinearLayout linearLayout = findViewById(R.id.ll_helpdesk);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        linearLayout = findViewById(R.id.ll_helpdesk);
         linearLayout.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, 100);
 
-        DocumentReference documentReference = fStore.collection("users").document(Objects.requireNonNull(fAuth.getCurrentUser()).getUid());
-        documentReference.get().addOnSuccessListener(documentSnapshot -> {
-            municipality = documentSnapshot.getString("municipality");
-            province = documentSnapshot.getString("province");
+        paramsInfo = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsInfo.setMargins(0, 0, 0, 30);
 
-            DocumentReference hotlinesPro = fStore.collection("helpDesk").document(province);
-            hotlinesPro.addSnapshotListener(LocalHelpDeskInfo.this, (value, error) -> {
-                if (value.getData() == null || value.getData().isEmpty()) {
-                    TextView errorMess = new TextView(LocalHelpDeskInfo.this);
-                    errorMess.setText("Provincial hotline unavailable");
-                    errorMess.setTextSize(35);
-                    errorMess.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    errorMess.setBackgroundColor(Color.parseColor("#95808080"));
-                    errorMess.setLayoutParams(params);
+        paramsLabel = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsLabel.setMargins(0, 50, 0, 50);
 
-                    linearLayout.addView(errorMess);
-                } else {
-                    TextView provinceName = new TextView(LocalHelpDeskInfo.this);
-                    provinceName.setText(province + " Province");
-                    provinceName.setTextSize(35);
-                    provinceName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    provinceName.setBackgroundColor(Color.parseColor("#95808080"));
-                    provinceName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        DocumentReference userRef = db.collection("users").document(currentUser.getUid());
+        userRef.addSnapshotListener((userSnapshot, error) -> {
+            if (userSnapshot != null) {
+                String municipality = userSnapshot.getString("municipality");
+                String province = userSnapshot.getString("province");
 
-                    TextView tvProLabel = new TextView(LocalHelpDeskInfo.this);
-                    tvProLabel.setText("Provincial Police Station:");
-                    tvProLabel.setTextSize(20);
-                    tvProLabel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvProLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                DocumentReference provinceRef = db.collection("helpDesk").document(province);
+                provinceRef.get().addOnSuccessListener(provinceSnapshot -> {
+                    if (provinceSnapshot == null || !provinceSnapshot.exists()) {
+                        TextView err = new TextView(LocalHelpDeskInfo.this);
+                        err.setText("Hotline Unavailable for " + province);
+                        err.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        err.setBackgroundColor(Color.LTGRAY);
+                        err.setTextSize(25);
+                        err.setLayoutParams(paramsLabel);
+                        linearLayout.addView(err);
+                    } else {
+                        TextView provinceTextViewLabel = new TextView(this);
+                        provinceTextViewLabel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        provinceTextViewLabel.setText(province);
+                        provinceTextViewLabel.setBackgroundColor(Color.LTGRAY);
+                        provinceTextViewLabel.setLayoutParams(paramsLabel);
+                        provinceTextViewLabel.setTextSize(30);
+                        linearLayout.addView(provinceTextViewLabel);
 
-                    TextView tvPro = new TextView(LocalHelpDeskInfo.this);
-                    tvPro.setText(value.getString("Provincial Police Station"));
-                    tvPro.setTextSize(25);
-                    tvPro.setBackgroundColor(Color.parseColor("#95808080"));
-                    tvPro.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvPro.setLayoutParams(params);
+                        for (Map.Entry<String, Object> entry : provinceSnapshot.getData().entrySet()) {
+                            TextView provinceTextView = new TextView(this);
+                            provinceTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            provinceTextView.setText(entry.getKey() + ":");
+                            provinceTextView.setLayoutParams(paramsInfo);
+                            linearLayout.addView(provinceTextView);
 
-                    TextView tvProLabel1 = new TextView(LocalHelpDeskInfo.this);
-                    tvProLabel1.setText("Provincial Social Welfare & Development Office:");
-                    tvProLabel1.setTextSize(20);
-                    tvProLabel1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvProLabel1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                            TextView provinceTextView1 = new TextView(this);
+                            provinceTextView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            provinceTextView1.setText(entry.getValue().toString());
+                            provinceTextView1.setLayoutParams(paramsInfo);
+                            provinceTextView1.setPaintFlags(provinceTextView1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                            provinceTextView1.setTextSize(25);
+                            linearLayout.addView(provinceTextView1);
 
-                    TextView tvPro1 = new TextView(LocalHelpDeskInfo.this);
-                    tvPro1.setText(value.getString("Provincial Social Welfare & Development Office"));
-                    tvPro1.setTextSize(25);
-                    tvPro1.setBackgroundColor(Color.parseColor("#95808080"));
-                    tvPro1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvPro1.setLayoutParams(params);
+                            provinceTextView1.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", entry.getValue().toString(), null))));
 
-                    linearLayout.addView(provinceName);
-                    linearLayout.addView(tvProLabel);
-                    linearLayout.addView(tvPro);
-                    linearLayout.addView(tvProLabel1);
-                    linearLayout.addView(tvPro1);
-                }
-            });
-            DocumentReference hotlines = fStore.collection("helpDesk").document(province).collection(municipality).document("Hotline");
-            hotlines.addSnapshotListener(LocalHelpDeskInfo.this, (value1, error1) -> {
-                if (value1.getData() == null || value1.getData().isEmpty()) {
-                    TextView errorMess = new TextView(LocalHelpDeskInfo.this);
-                    errorMess.setText("City hotline unavailable");
-                    errorMess.setTextSize(35);
-                    errorMess.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    errorMess.setBackgroundColor(Color.parseColor("#95808080"));
-                    errorMess.setLayoutParams(params);
+                        }
+                    }
+                });
 
-                    linearLayout.addView(errorMess);
-                } else {
-                    TextView cityName = new TextView(LocalHelpDeskInfo.this);
-                    cityName.setText(municipality);
-                    cityName.setTextSize(35);
-                    cityName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    cityName.setBackgroundColor(Color.parseColor("#95808080"));
-                    cityName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    TextView tvLabel = new TextView(LocalHelpDeskInfo.this);
-                    tvLabel.setText("City Police Station:");
-                    tvLabel.setTextSize(20);
-                    tvLabel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    TextView tv = new TextView(LocalHelpDeskInfo.this);
-                    tv.setText(value1.getString("City Police Station"));
-                    tv.setTextSize(25);
-                    tv.setBackgroundColor(Color.parseColor("#95808080"));
-                    tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tv.setLayoutParams(params);
-
-                    TextView tvLabel1 = new TextView(LocalHelpDeskInfo.this);
-                    tvLabel1.setText("City Social Welfare & Development Office:");
-                    tvLabel1.setTextSize(20);
-                    tvLabel1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvLabel1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    TextView tv1 = new TextView(LocalHelpDeskInfo.this);
-                    tv1.setText(value1.getString("City Social Welfare & Development Office"));
-                    tv1.setTextSize(25);
-                    tv1.setBackgroundColor(Color.parseColor("#95808080"));
-                    tv1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tv1.setLayoutParams(params);
-
-                    TextView tvLabel2 = new TextView(LocalHelpDeskInfo.this);
-                    tvLabel2.setText("Public Attorney's Office:");
-                    tvLabel2.setTextSize(20);
-                    tvLabel2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tvLabel2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    TextView tv2 = new TextView(LocalHelpDeskInfo.this);
-                    tv2.setText(value1.getString("Public Attorney's Office"));
-                    tv2.setTextSize(25);
-                    tv2.setBackgroundColor(Color.parseColor("#95808080"));
-                    tv2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    tv2.setLayoutParams(params);
-
-                    linearLayout.addView(cityName);
-                    linearLayout.addView(tvLabel);
-                    linearLayout.addView(tv);
-                    linearLayout.addView(tvLabel1);
-                    linearLayout.addView(tv1);
-                    linearLayout.addView(tvLabel2);
-                    linearLayout.addView(tv2);
-                }
-            });
+                String cityCollectionName = String.format("%s City", municipality);
+                final DocumentReference[] cityRef = {db.collection("helpDesk").document(province).collection(cityCollectionName).document("Hotline")};
+                cityRef[0].get().addOnSuccessListener(citySnapshot -> {
+                    if (!citySnapshot.exists()) {
+                        cityRef[0] = db.collection("helpDesk").document(province).collection(municipality).document("Hotline");
+                        cityRef[0].get().addOnSuccessListener(city1Snapshot -> {
+                            if (city1Snapshot.getData() == null) {
+                                TextView err = new TextView(LocalHelpDeskInfo.this);
+                                err.setText("Hotline Unavailable for " + municipality);
+                                err.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                err.setBackgroundColor(Color.LTGRAY);
+                                err.setTextSize(25);
+                                err.setLayoutParams(paramsLabel);
+                                linearLayout.addView(err);
+                            } else {
+                                displayCityInfo(municipality, city1Snapshot);
+                            }
+                        });
+                    } else {
+                        displayCityInfo(cityCollectionName, citySnapshot);
+                    }
+                });
+            }
         });
     }
+
+    private void displayCityInfo(String city, DocumentSnapshot citySnapshot) {
+        TextView cityTextViewLabel = new TextView(this);
+        cityTextViewLabel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        cityTextViewLabel.setText(city);
+        cityTextViewLabel.setBackgroundColor(Color.LTGRAY);
+        cityTextViewLabel.setLayoutParams(paramsLabel);
+        cityTextViewLabel.setTextSize(30);
+        linearLayout.addView(cityTextViewLabel);
+
+        for (Map.Entry<String, Object> entry : citySnapshot.getData().entrySet()) {
+            TextView cityTextView = new TextView(this);
+            cityTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            cityTextView.setText(entry.getKey() + ":");
+            cityTextView.setLayoutParams(paramsInfo);
+            linearLayout.addView(cityTextView);
+
+            TextView cityTextView1 = new TextView(this);
+            cityTextView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            cityTextView1.setText(entry.getValue().toString());
+            cityTextView1.setLayoutParams(paramsInfo);
+            cityTextView1.setPaintFlags(cityTextView1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            cityTextView1.setTextSize(25);
+            linearLayout.addView(cityTextView1);
+
+            cityTextView1.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", entry.getValue().toString(), null))));
+        }
+    }
 }
+

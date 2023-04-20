@@ -9,7 +9,6 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/drawer_toolbar_home"
-        style="@style/toolbarStyleHome"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +16,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:menu="@menu/toolbar_menu_home" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -41,33 +41,61 @@
                 android:contentDescription="logo"
                 android:src="@drawable/logo" />
 
-            <Button
-                android:id="@+id/btn_lesson"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:layout_margin="5dp"
-                android:text="Lesson" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_games"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:layout_margin="5dp"
-                android:text="Games" />
+                <Button
+                    android:id="@+id/btn_lesson"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_content"
+                    android:text="Lesson" />
 
-            <Button
-                android:id="@+id/btn_helpdesk"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:layout_margin="5dp"
-                android:text="Local Help Desk Information" />
+                <Button
+                    android:id="@+id/btn_games"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_game"
+                    android:text="Games" />
 
+                <Button
+                    android:id="@+id/btn_helpdesk"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_helpdesk"
+                    android:text="Local Help Desk Information"
+                    android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btn_aboutUs"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:text="About Us" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_acc_sett"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_acc_sett"
+                    android:text="Account Settings" />
+
+                <Button
+                    android:id="@+id/btn_aboutUs"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_aboutus"
+                    android:text="About Us" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

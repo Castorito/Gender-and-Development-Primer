@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -18,10 +17,17 @@
         android:theme="@style/Theme.GenderAndDevelopmentPrimer"
         tools:targetApi="31">
         <activity
+            android:name=".JumbledWords"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name=".GameMenu"
+            android:exported="false" />
+        <activity
             android:name=".AboutUs"
             android:exported="false" />
         <activity
-            android:name=".WordGame"
+            android:name=".PictoWord"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
@@ -32,6 +38,13 @@
             android:exported="false" />
         <activity
             android:name=".Settings"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".DrawerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -61,13 +74,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".DrawerActivity"
-            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

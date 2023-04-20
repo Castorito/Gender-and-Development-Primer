@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.GenderAndDevelopmentPrimer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#484B6A</item>
-        <item name="colorPrimaryVariant">#484B6A</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,17 +17,13 @@
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textFontWeight">500</item>
+
     </style>
     <style name="SubTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:background">#FAFAFA</item>
     </style>
     <style name="toolbarStyle" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">#484B6A</item>
-    </style>
-
-    <style name="toolbarStyleHome" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">#FAFAFA</item>
+        <item name="android:background">#DCA1B0</item>
     </style>
 </resources>

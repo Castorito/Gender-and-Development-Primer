@@ -2,12 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/acc_sett"
-        android:icon="@drawable/ic_acc_sett"
-        android:title="Account Settings"/>
-    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
-        app:showAsAction="never"
+        app:showAsAction="always"
         android:title="Log out"/>
 </menu>

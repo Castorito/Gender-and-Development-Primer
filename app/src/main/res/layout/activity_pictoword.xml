@@ -5,7 +5,7 @@
     style="@style/SubTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WordGame">
+    tools:context=".PictoWord">
     <ScrollView
         android:layout_centerInParent="true"
         android:id="@+id/sv_game"

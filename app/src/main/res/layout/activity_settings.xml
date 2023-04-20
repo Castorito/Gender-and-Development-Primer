@@ -2,18 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SubTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/SubTheme"
     tools:context=".Settings">
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:scrollbarStyle="outsideInset"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -23,141 +23,149 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="First Name:" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <EditText
-                android:id="@+id/fName"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:enabled="false"
+                    android:hint="First Name"
+                    android:inputType="textPersonName"
+                    android:minWidth="488dp"
+                    android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableEnd="@drawable/ic_edit"
-                android:enabled="false"
-                android:inputType="textPersonName"
-                android:minWidth="488dp"
-                android:text="First Name"
-                android:textSize="20sp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:enabled="false"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Last Name:" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <EditText
-                android:id="@+id/lName"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Sex"
+                    android:minWidth="488dp"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableEnd="@drawable/ic_edit"
-                android:enabled="false"
-                android:inputType="textPersonName"
-                android:minWidth="488dp"
-                android:minHeight="48dp"
-                android:text="Last Name"
-                android:textSize="20sp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Sex:" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <TextView
-                android:id="@+id/sex"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/municipality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:enabled="false"
+                    android:hint="Municipality"
+                    android:inputType="text"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:minWidth="488dp"
-                android:text="Sex"
-                android:textSize="20sp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:enabled="false"
+                    android:hint="Province"
+                    android:inputType="text"
+                    android:minWidth="488dp"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Email:" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled">
 
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableEnd="@drawable/ic_edit"
-                android:enabled="false"
-                android:inputType="textEmailAddress"
-                android:minWidth="488dp"
-                android:minHeight="48dp"
-                android:text="Email"
-                android:textSize="20sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Role"
+                    android:minWidth="488dp"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Municipality:" />
-
-            <EditText
-                android:id="@+id/municipality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableEnd="@drawable/ic_edit"
-                android:enabled="false"
-                android:inputType="text"
-                android:minWidth="488dp"
-                android:minHeight="48dp"
-                android:text="Municipality"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Province:" />
-
-            <EditText
-                android:id="@+id/province"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableEnd="@drawable/ic_edit"
-                android:enabled="false"
-                android:inputType="text"
-                android:minWidth="488dp"
-                android:text="Province"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="User Type:" />
-
-            <TextView
-                android:id="@+id/userType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:minWidth="488dp"
-                android:text="User Type"
-                android:textSize="20sp" />
-
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_editProfile"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Edit Profile" />
+                android:minWidth="320dp"
+                android:minHeight="48dp"
+                android:text="Edit Profile"
+                app:cornerRadius="20dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_changePass"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change Password" />
+                android:minWidth="320dp"
+                android:minHeight="48dp"
+                android:text="Change Password"
+                app:cornerRadius="20dp" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

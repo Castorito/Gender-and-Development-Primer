@@ -47,6 +47,8 @@ public class Quiz extends AppCompatActivity {
         Button btn = new Button(this);
         btn.setText("Submit");
 
+
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
 
@@ -112,18 +114,17 @@ public class Quiz extends AppCompatActivity {
 
                             for (int i = 1; i <= Objects.requireNonNull(map).size(); i++) {
                                 EditText answers = findViewById(i);
-
                                 if (answers.getText().toString().equals(Objects.requireNonNull(value).getString("ans" + i))) {
                                     score++;
                                     answerList.add(String.format("%d. %s  ⁄", i, answers.getText().toString()));
-                                }else{
+                                } else {
                                     answerList.add(String.format("%d. %s  ×", i, answers.getText().toString()));
                                 }
                             }
 
                             AlertDialog.Builder showScore = new AlertDialog.Builder(this);
                             showScore.setTitle(String.format("Your score is: %d", score));
-                            showScore.setItems(answerList.toArray(new CharSequence[0]),null);
+                            showScore.setItems(answerList.toArray(new CharSequence[0]), null);
                             showScore.setCancelable(false);
                             showScore.setNegativeButton("Done", (dialog, which) -> finish());
                             AlertDialog show = showScore.create();

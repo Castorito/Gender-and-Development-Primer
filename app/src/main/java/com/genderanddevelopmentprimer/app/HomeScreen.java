@@ -5,23 +5,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
 public class HomeScreen extends AppCompatActivity {
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    String userID;
-    Button btnLesson, btnHelp, btnAboutUs, btnGames;
+    Button btnLesson, btnHelp, btnAboutUs, btnGames, btnSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,25 +31,21 @@ public class HomeScreen extends AppCompatActivity {
         setSupportActionBar(drawerToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+
         btnLesson = findViewById(R.id.btn_lesson);
         btnGames = findViewById(R.id.btn_games);
         btnHelp = findViewById(R.id.btn_helpdesk);
         btnAboutUs = findViewById(R.id.btn_aboutUs);
-
-
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
+        btnSettings = findViewById(R.id.btn_acc_sett);
 
         //lesson button opens teacher.class/student.class
-        btnLesson.setOnClickListener(v -> {
-            userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-            DocumentReference documentReference = fStore.collection("users").document(userID);
-            documentReference.addSnapshotListener((value, error) -> startActivity(new Intent(getApplicationContext(), DrawerActivity.class)));
-        });
+        btnLesson.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DrawerActivity.class)));
 
-        btnGames.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), WordGame.class)));
+        btnGames.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), GameMenu.class)));
 
         btnHelp.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), LocalHelpDeskInfo.class)));
+
+        btnSettings.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Settings.class)));
 
         btnAboutUs.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AboutUs.class)));
     }
@@ -73,12 +68,17 @@ public class HomeScreen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
         if (item.getItemId() == R.id.logout) {
-            fAuth.signOut();
+            FirebaseAuth.getInstance().signOut();
+            googleSignInClient.signOut().addOnCompleteListener(this, task -> {
+                        // update your UI if needed
+                        Toast.makeText(this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                    });
+            finish();
             startActivity(new Intent(getApplicationContext(), Login.class));
-            finishAffinity();
-        } else if (item.getItemId() == R.id.acc_sett) {
-            startActivity(new Intent(getApplicationContext(), Settings.class));
         }
         return super.onOptionsItemSelected(item);
     }

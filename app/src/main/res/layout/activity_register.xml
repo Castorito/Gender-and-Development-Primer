@@ -18,10 +18,11 @@
 
         <LinearLayout
             android:id="@+id/register_form"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="22dp">
 
             <TextView
@@ -39,30 +40,47 @@
                 android:text="Create Account"
                 android:textAlignment="center" />
 
-            <EditText
-                android:id="@+id/fName"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
-                android:inputType="textPersonName"
-                android:minWidth="488dp"
-                android:minHeight="48dp"/>
+                app:boxBackgroundMode="filled"
+                app:startIconDrawable="@drawable/ic_letters">
 
-            <EditText
-                android:id="@+id/lName"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:hint="First Name"
+                    android:inputType="textPersonName"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Last Name"
-                android:inputType="textPersonName"
-                android:minWidth="488dp"
-                android:minHeight="48dp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled"
+                app:startIconDrawable="@drawable/ic_letters">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -71,6 +89,7 @@
 
                 <Spinner
                     android:id="@+id/userType"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:entries="@array/userType"
@@ -81,8 +100,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,6 +110,7 @@
 
                 <Spinner
                     android:id="@+id/sex"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:entries="@array/sex"
@@ -99,70 +119,107 @@
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/register_municipality"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Municipality"
-                android:inputType="text"
-                android:minWidth="488dp"
-                android:minHeight="48dp"/>
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled"
+                app:startIconDrawable="@drawable/ic_city">
 
-            <EditText
-                android:id="@+id/register_province"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_municipality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Municipality"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Province"
-                android:inputType="text"
-                android:minWidth="488dp"
-                android:minHeight="48dp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled"
+                app:startIconDrawable="@drawable/ic_province">
 
-            <EditText
-                android:id="@+id/register_emailAddress"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Province"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:minWidth="488dp"
-                android:minHeight="48dp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled"
+                app:startIconDrawable="@drawable/ic_email">
 
-            <EditText
-                android:id="@+id/register_password"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_emailAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Address"
+                    android:inputType="textEmailAddress"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:minWidth="488dp"
-                android:minHeight="48dp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled"
+                app:endIconMode="password_toggle"
+                app:startIconDrawable="@drawable/ic_password">
 
-            <EditText
-                android:id="@+id/register_retypePass"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp"
+                    android:paddingEnd="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Retype Password"
-                android:inputType="textPassword"
-                android:minWidth="488dp"
-                android:minHeight="48dp" />
+                android:layout_margin="3dp"
+                app:boxBackgroundMode="filled"
+                app:endIconMode="password_toggle"
+                app:startIconDrawable="@drawable/ic_password">
 
-            <CheckBox
-                android:id="@+id/showPassReg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="488dp"
-                android:text="Show Password" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_confirmPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:minWidth="488dp"
+                    android:minHeight="48dp"
+                    android:paddingEnd="50dp"/>
 
-            <Button
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:minWidth="320dp"
                 android:minHeight="48dp"
-                android:text="Register" />
+                android:text="Register"
+                app:cornerRadius="20dp" />
 
             <TextView
                 android:id="@+id/btn_login"
