@@ -43,20 +43,12 @@ public class LocalHelpDeskInfo extends AppCompatActivity {
         DocumentReference userRef = db.collection("users").document(currentUser.getUid());
         userRef.addSnapshotListener((userSnapshot, error) -> {
             if (userSnapshot != null) {
-                String municipality = userSnapshot.getString("municipality");
                 String province = userSnapshot.getString("province");
+                String municipality = userSnapshot.getString("municipality");
 
                 DocumentReference provinceRef = db.collection("helpDesk").document(province);
                 provinceRef.get().addOnSuccessListener(provinceSnapshot -> {
-                    if (provinceSnapshot == null || !provinceSnapshot.exists()) {
-                        TextView err = new TextView(LocalHelpDeskInfo.this);
-                        err.setText("Hotline Unavailable for " + province);
-                        err.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        err.setBackgroundColor(Color.LTGRAY);
-                        err.setTextSize(25);
-                        err.setLayoutParams(paramsLabel);
-                        linearLayout.addView(err);
-                    } else {
+                    if (provinceSnapshot.exists()) {
                         TextView provinceTextViewLabel = new TextView(this);
                         provinceTextViewLabel.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         provinceTextViewLabel.setText(province);
@@ -81,32 +73,39 @@ public class LocalHelpDeskInfo extends AppCompatActivity {
                             linearLayout.addView(provinceTextView1);
 
                             provinceTextView1.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", entry.getValue().toString(), null))));
-
                         }
-                    }
-                });
-
-                String cityCollectionName = String.format("%s City", municipality);
-                final DocumentReference[] cityRef = {db.collection("helpDesk").document(province).collection(cityCollectionName).document("Hotline")};
-                cityRef[0].get().addOnSuccessListener(citySnapshot -> {
-                    if (!citySnapshot.exists()) {
-                        cityRef[0] = db.collection("helpDesk").document(province).collection(municipality).document("Hotline");
-                        cityRef[0].get().addOnSuccessListener(city1Snapshot -> {
-                            if (city1Snapshot.getData() == null) {
-                                TextView err = new TextView(LocalHelpDeskInfo.this);
-                                err.setText("Hotline Unavailable for " + municipality);
-                                err.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                err.setBackgroundColor(Color.LTGRAY);
-                                err.setTextSize(25);
-                                err.setLayoutParams(paramsLabel);
-                                linearLayout.addView(err);
-                            } else {
-                                displayCityInfo(municipality, city1Snapshot);
-                            }
-                        });
                     } else {
-                        displayCityInfo(cityCollectionName, citySnapshot);
+                        TextView err = new TextView(LocalHelpDeskInfo.this);
+                        err.setText("Hotline Unavailable for " + province);
+                        err.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        err.setBackgroundColor(Color.LTGRAY);
+                        err.setTextSize(25);
+                        err.setLayoutParams(paramsLabel);
+                        linearLayout.addView(err);
                     }
+
+                    String cityCollectionName = String.format("%s City", municipality);
+                    final DocumentReference[] cityRef = {db.collection("helpDesk").document(province).collection(municipality).document("Hotline")};
+                    cityRef[0].get().addOnSuccessListener(citySnapshot -> {
+                        if (!citySnapshot.exists()) {
+                            cityRef[0] = db.collection("helpDesk").document(province).collection(cityCollectionName).document("Hotline");
+                            cityRef[0].get().addOnSuccessListener(city1Snapshot -> {
+                                if (city1Snapshot.exists()) {
+                                    displayCityInfo(cityCollectionName, city1Snapshot);
+                                } else {
+                                    TextView err = new TextView(LocalHelpDeskInfo.this);
+                                    err.setText("Hotline Unavailable for " + municipality);
+                                    err.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                    err.setBackgroundColor(Color.LTGRAY);
+                                    err.setTextSize(25);
+                                    err.setLayoutParams(paramsLabel);
+                                    linearLayout.addView(err);
+                                }
+                            });
+                        } else {
+                            displayCityInfo(municipality, citySnapshot);
+                        }
+                    });
                 });
             }
         });

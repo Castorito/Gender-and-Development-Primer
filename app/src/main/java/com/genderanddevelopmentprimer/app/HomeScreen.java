@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 public class HomeScreen extends AppCompatActivity {
-    Button btnLesson, btnHelp, btnAboutUs, btnGames, btnSettings;
+    ImageView btnLesson, btnHelp, btnAboutUs, btnGames, btnSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

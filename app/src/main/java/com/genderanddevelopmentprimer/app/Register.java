@@ -3,6 +3,7 @@ package com.genderanddevelopmentprimer.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,13 +42,23 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        InputFilter capitalizeFirstFilter = (source, start, end, dest, dstart, dend) -> {
+            if (start == 0 && source.length() > 0) {
+                String firstLetter = Character.toUpperCase(source.charAt(0)) + "";
+                String remainingLetters = source.subSequence(1, source.length()).toString();
+                return firstLetter + remainingLetters;
+            }
+            return source;
+        };
 
         firstName = findViewById(R.id.fName);
         lastName = findViewById(R.id.lName);
         userType = findViewById(R.id.userType);
         userSex = findViewById(R.id.sex);
         municipality = findViewById(R.id.register_municipality);
+        municipality.setFilters(new InputFilter[]{capitalizeFirstFilter});
         province = findViewById(R.id.register_province);
+        province.setFilters(new InputFilter[]{capitalizeFirstFilter});
         emailAddress = findViewById(R.id.register_emailAddress);
         password = findViewById(R.id.register_password);
         retypePass = findViewById(R.id.register_confirmPassword);

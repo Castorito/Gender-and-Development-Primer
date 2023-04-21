@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -200,7 +201,7 @@ public class Login extends AppCompatActivity {
                         if (task13.isSuccessful()) {
                             startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                             finish();
-                        }else {
+                        } else {
                             // Define the options for the sex and role drop-down boxes
                             String[] sexOptions = {"Male", "Female"};
                             String[] roleOptions = {"Student", "Teacher"};
@@ -236,12 +237,23 @@ public class Login extends AppCompatActivity {
                             sexSpinner.setAdapter(sexAdapter);
                             layout.addView(sexSpinner);
 
+                            InputFilter capitalizeFirstFilter = (source, start, end, dest, dstart, dend) -> {
+                                if (start == 0 && source.length() > 0) {
+                                    String firstLetter = Character.toUpperCase(source.charAt(0)) + "";
+                                    String remainingLetters = source.subSequence(1, source.length()).toString();
+                                    return firstLetter + remainingLetters;
+                                }
+                                return source;
+                            };
+
+
                             TextInputLayout muniLayout = new TextInputLayout(Login.this);
                             muniLayout.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_NONE);
                             muniLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                             TextInputEditText municipality = new TextInputEditText(Login.this);
                             municipality.setHint("Municipality");
+                            municipality.setFilters(new InputFilter[]{capitalizeFirstFilter});
                             municipality.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             muniLayout.addView(municipality);
 
@@ -251,6 +263,7 @@ public class Login extends AppCompatActivity {
 
                             TextInputEditText province = new TextInputEditText(Login.this);
                             province.setHint("Province");
+                            province.setFilters(new InputFilter[]{capitalizeFirstFilter});
                             province.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             proviLayout.addView(province);
 

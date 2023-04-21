@@ -21,6 +21,6 @@
         app:icon="@drawable/ic_content"
         app:iconGravity="textEnd"
         android:text="Take Assessment"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </RelativeLayout>

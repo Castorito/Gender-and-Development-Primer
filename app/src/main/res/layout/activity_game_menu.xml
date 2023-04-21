@@ -26,25 +26,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/btn_jumbledwords"
-                    style="?attr/buttonBarStyle"
                     android:layout_width="150dp"
                     android:layout_height="230dp"
                     android:layout_margin="10dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/jwbg"
-                    android:text="Jumbled Words" />
+                    android:contentDescription="jumbled words"
+                    android:src="@drawable/jumbledwords" />
 
-                <ImageButton
+
+                <ImageView
                     android:id="@+id/btn_pictoword"
                     style="?attr/buttonBarStyle"
                     android:layout_width="150dp"
                     android:layout_height="230dp"
                     android:layout_margin="10dp"
-                    android:drawableTop="@drawable/ic_pictoword"
-                    android:src="@drawable/ic_pictoword"
-                    android:text="Pictoword" />
+                    android:contentDescription="Pic to word"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/pictowords" />
             </LinearLayout>
 
             <LinearLayout
@@ -52,23 +51,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <ImageView
+                    android:id="@+id/btn_memoryMatch"
                     style="?attr/buttonBarStyle"
                     android:layout_width="150dp"
                     android:layout_height="230dp"
                     android:layout_margin="10dp"
-                    android:drawableTop="@drawable/ic_memorymatch"
-                    android:src="@drawable/ic_memorymatch"
-                    android:text="Memory Match" />
+                    android:contentDescription="memory match"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/memorymatch" />
 
-                <ImageButton
-                    style="?attr/buttonBarStyle"
+                <ImageView
                     android:layout_width="150dp"
                     android:layout_height="230dp"
                     android:layout_margin="10dp"
-                    android:drawableTop="@drawable/ic_jumbledwords"
-                    android:src="@drawable/cvsu"
-                    android:text="Pending.." />
+                    android:contentDescription="pending"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_game" />
             </LinearLayout>
 
         </LinearLayout>

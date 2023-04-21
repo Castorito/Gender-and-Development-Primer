@@ -2,6 +2,7 @@ package com.genderanddevelopmentprimer.app;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
@@ -30,6 +31,15 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        InputFilter capitalizeFirstFilter = (source, start, end, dest, dstart, dend) -> {
+            if (start == 0 && source.length() > 0) {
+                String firstLetter = Character.toUpperCase(source.charAt(0)) + "";
+                String remainingLetters = source.subSequence(1, source.length()).toString();
+                return firstLetter + remainingLetters;
+            }
+            return source;
+        };
+
         btneditProfile = findViewById(R.id.btn_editProfile);
         btnChangePass = findViewById(R.id.btn_changePass);
 
@@ -38,7 +48,9 @@ public class Settings extends AppCompatActivity {
         sex = findViewById(R.id.sex);
         email = findViewById(R.id.email);
         municipality = findViewById(R.id.municipality);
+        municipality.setFilters(new InputFilter[]{capitalizeFirstFilter});
         province = findViewById(R.id.province);
+        province.setFilters(new InputFilter[]{capitalizeFirstFilter});
         usertype = findViewById(R.id.userType);
 
         fAuth = FirebaseAuth.getInstance();

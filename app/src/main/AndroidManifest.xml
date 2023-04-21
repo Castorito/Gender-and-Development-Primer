@@ -17,9 +17,15 @@
         android:theme="@style/Theme.GenderAndDevelopmentPrimer"
         tools:targetApi="31">
         <activity
+            android:name=".MemoryMatch"
+            android:configChanges="screenSize|uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".JumbledWords"
-            android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:configChanges="orientation|screenSize|uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GameMenu"
             android:exported="false" />
@@ -28,8 +34,9 @@
             android:exported="false" />
         <activity
             android:name=".PictoWord"
-            android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:configChanges="orientation|screenSize|uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LocalHelpDeskInfo"
             android:exported="false" />

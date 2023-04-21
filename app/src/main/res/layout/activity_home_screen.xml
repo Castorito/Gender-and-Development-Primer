@@ -44,57 +44,48 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_lesson"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_content"
-                    android:text="Lesson" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/lesson" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_games"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_game"
-                    android:text="Games" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/games" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_helpdesk"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_helpdesk"
-                    android:text="Local Help Desk Information"
-                    android:textSize="12sp" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/helpdesk" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_acc_sett"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_acc_sett"
-                    android:text="Account Settings" />
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/accsett" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_aboutUs"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_aboutus"
-                    android:text="About Us" />
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/aboutus" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
